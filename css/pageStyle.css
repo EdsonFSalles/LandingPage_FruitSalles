@@ -1,0 +1,1638 @@
+:root {
+    --purple-950: #16091f;
+    --purple-900: #210d2d;
+    --purple-800: #321044;
+    --purple-700: #48165e;
+    --purple-600: #68217d;
+    --purple-500: #8e3fa3;
+    --purple-400: #ad63bd;
+    --purple-300: #d29cda;
+
+    --lavender: #ead8ed;
+    --cream: #fff8f1;
+    --white: #ffffff;
+    --text: #24152b;
+    --muted: #806c85;
+
+    --pink: #e85ca5;
+    --pink-light: #ff9bcb;
+
+    --green: #55a86b;
+    --yellow: #f3c95b;
+    --blue: #62a9e8;
+
+    --shadow: 0 18px 45px rgba(38, 8, 49, .14);
+    --shadow-heavy: 0 25px 70px rgba(35, 7, 45, .24);
+
+    --radius: 24px;
+    --radius-small: 14px;
+
+    --container: 1180px;
+}
+
+
+/* ---------- RESET ---------- */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Segoe UI", Inter, Arial, sans-serif;
+    background:
+        radial-gradient(circle at 10% 10%, rgba(190, 110, 211, .12), transparent 28%),
+        radial-gradient(circle at 90% 30%, rgba(232, 92, 165, .10), transparent 25%),
+        var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+    width: 100%;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.container {
+    width: min(var(--container), calc(100% - 40px));
+    object-position: top;
+    margin: auto;
+}
+
+
+/* ==============================
+             HEADER
+   ============================== */
+
+.header {
+    position: relative;
+    z-index: 20;
+    background: var(--purple-950);
+    color: var(--white);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.header-content {
+    min-height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    width: 45px;
+    height: 45px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    box-shadow: 0 8px 25px rgba(232, 92, 165, .25);
+}
+
+
+.logo-text strong {
+    display: block;
+    font-size: 22px;
+    line-height: 1;
+    letter-spacing: -.8px;
+}
+
+.logo-text strong span {
+    color: #fff;
+}
+
+.logo-text strong b {
+    color: var(--pink-light);
+}
+
+.logo-text small {
+    display: block;
+    margin-top: 5px;
+    color: #cbb5d0;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.8px;
+}
+
+.social-menu {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.social-menu a {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 14px;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 30px;
+    color: #eee1f0;
+    font-size: 12px;
+    transition: .25s ease;
+}
+
+.social-menu a:hover {
+    background: var(--purple-700);
+    transform: translateY(-2px);
+}
+
+.social-menu span {
+    color: var(--pink-light);
+}
+
+
+/* =======================
+            HERO
+   ======================= */
+
+.hero {
+    position: relative;
+    overflow: hidden;
+    min-height: 570px;
+    background:
+        radial-gradient(circle at 75% 30%, rgba(183, 92, 204, .32), transparent 30%),
+        linear-gradient(135deg, var(--purple-950), var(--purple-800));
+    color: white;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    border: 70px solid rgba(255,255,255,.035);
+    border-radius: 50%;
+    right: -130px;
+    top: -140px;
+}
+
+.hero::after {
+    content: "✦";
+    position: absolute;
+    right: 12%;
+    bottom: 12%;
+    font-size: 110px;
+    color: rgba(255,255,255,.035);
+    transform: rotate(18deg);
+}
+
+.hero-content {
+    min-height: 570px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 50px;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-text {
+    padding: 60px 0;
+}
+
+.hero-text::before {
+    content: "ARTESANAL • GELADO • DELICIOSO";
+    display: inline-block;
+    margin-bottom: 18px;
+    padding: 8px 14px;
+    border-radius: 30px;
+    background: rgba(255,255,255,.10);
+    border: 1px solid rgba(255,255,255,.12);
+    color: var(--pink-light);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.hero h1 {
+    max-width: 580px;
+    font-size: clamp(48px, 6vw, 82px);
+    line-height: .88;
+    text-transform: uppercase;
+    letter-spacing: -4px;
+}
+
+.hero h1 span {
+    display: block;
+    color: var(--pink-light);
+}
+
+.hero h1 span:last-child {
+    color: white;
+}
+
+.hero-text > p {
+    max-width: 480px;
+    margin: 25px 0;
+    color: #d8c9dc;
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+.hero-benefits {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 28px;
+}
+
+.benefit {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 14px;
+}
+
+.benefit .icon {
+    font-size: 23px;
+}
+
+.benefit strong {
+    font-size: 10px;
+    line-height: 1.25;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+.hero-image {
+    position: relative;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-image::before {
+    content: "";
+    position: absolute;
+    width: 370px;
+    height: 370px;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 35% 30%, #c678d5, #632070 65%, transparent 66%);
+    opacity: .85;
+}
+
+.hero-image::after {
+    content: "🍓  🍇  🍋";
+    position: absolute;
+    bottom: 55px;
+    right: 0;
+    font-size: 27px;
+    letter-spacing: 8px;
+    transform: rotate(-8deg);
+}
+
+.hero-image img {
+    position: relative;
+    z-index: 2;
+    width: min(440px, 90%);
+    max-height: 480px;
+    object-fit: contain;
+    filter: drop-shadow(0 30px 30px rgba(0,0,0,.38));
+    transform: rotate(3deg);
+    transition: .4s ease;
+}
+
+.hero-image img:hover {
+    transform: rotate(0) scale(1.04);
+}
+
+
+/* ========================
+            BUTTONS
+   ======================== */
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 46px;
+    padding: 0 23px;
+    border-radius: 30px;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: .6px;
+    transition: .25s ease;
+    box-shadow: 0 8px 20px rgba(0,0,0,.12);
+}
+
+.button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 28px rgba(0,0,0,.18);
+}
+
+.button-pink {
+    background: linear-gradient(135deg, var(--pink), #c63d87);
+    color: white;
+}
+
+.button-green {
+    background: linear-gradient(135deg, #63bd79, #32864c);
+    color: white;
+}
+
+.button-purple {
+    background: linear-gradient(135deg, #a14bb7, #642071);
+    color: white;
+}
+
+.button-yellow {
+    background: linear-gradient(135deg, #f5d267, #d9a92f);
+    color: #35240a;
+}
+
+.button-blue {
+    background: linear-gradient(135deg, #75c2fa, #3884c2);
+    color: white;
+}
+
+
+/* ========================
+            INFO BAR
+   ======================== */
+
+.info-bar {
+    position: relative;
+    z-index: 5;
+    width: min(1080px, calc(100% - 40px));
+    margin: -30px auto 0;
+    padding: 18px 28px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border-right: 1px solid #eee5ef;
+}
+
+.info-item:last-child {
+    border-right: 0;
+}
+
+.info-item span {
+    font-size: 25px;
+}
+
+.info-item p {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+}
+
+
+/* ===========================
+        INTRO PRODUCTS
+   =========================== */
+
+.products-intro {
+    padding: 100px 0 80px;
+}
+
+.products-layout {
+    display: grid;
+    grid-template-columns: 1.35fr .65fr;
+    gap: 28px;
+    align-items: stretch;
+}
+
+.flavors-card,
+.how-card {
+    position: relative;
+    padding: 40px;
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.flavors-card {
+    background:
+        radial-gradient(circle at 90% 10%, rgba(255,255,255,.14), transparent 25%),
+        linear-gradient(135deg, var(--purple-900), var(--purple-700));
+    color: white;
+    box-shadow: var(--shadow-heavy);
+}
+
+.flavors-card::after {
+    content: "🍹";
+    position: absolute;
+    right: -20px;
+    bottom: -35px;
+    font-size: 170px;
+    opacity: .08;
+    transform: rotate(-15deg);
+}
+
+.flavorsImg{
+    display: inline-block;
+    width: 643px;
+    margin-top: 20px;
+    border-radius: 45px;
+}
+
+.flavors-card h2,
+.how-card h2 {
+    position: relative;
+    z-index: 2;
+    font-size: 31px;
+    letter-spacing: -1px;
+}
+
+.flavors-card h3 {
+    position: relative;
+    z-index: 2;
+    margin: 30px 0 15px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #dcb9e4;
+}
+
+.price-box {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.price {
+    flex: 1;
+    padding: 15px;
+    border-radius: 14px;
+    background: rgba(255,255,255,.09);
+    border: 1px solid rgba(255,255,255,.10);
+}
+
+.price strong {
+    display: block;
+    color: var(--pink-light);
+    font-size: 23px;
+}
+
+.price small {
+    display: block;
+    margin-top: 4px;
+    font-size: 9px;
+    color: #d7c6da;
+    text-transform: uppercase;
+}
+
+.flavors {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 9px;
+    margin-bottom: 25px;
+}
+
+.flavor {
+    min-height: 83px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 13px;
+    transition: .25s ease;
+}
+
+.flavor:hover {
+    background: rgba(255,255,255,.18);
+    transform: translateY(-5px) rotate(-2deg);
+}
+
+.flavor span {
+    font-size: 25px;
+}
+
+.flavor small {
+    font-size: 8px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.how-card {
+    background: white;
+    box-shadow: var(--shadow);
+}
+
+.how-card h2 {
+    color: var(--purple-900);
+    margin-bottom: 24px;
+}
+
+.how-step {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 13px 0;
+    border-bottom: 1px dashed #e7dce9;
+}
+
+.how-step > span {
+    flex: 0 0 42px;
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: var(--lavender);
+    font-size: 20px;
+}
+
+.how-step p {
+    font-size: 12px;
+    line-height: 1.4;
+    font-weight: 700;
+}
+
+.contact-box {
+    margin-top: 25px;
+    padding: 20px;
+    border-radius: 16px;
+    background: #f8f0f9;
+}
+
+.contact-box h3 {
+    margin-bottom: 7px;
+    color: var(--purple-700);
+}
+
+.contact-box p {
+    margin-bottom: 15px;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.fruit-popsicle {
+    min-height: 480px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background:
+        radial-gradient(circle at 10% 50%, rgba(255,255,255,.10), transparent 25%),
+        var(--purple-800);
+    color: white;
+}
+
+.fruit-image {
+    min-height: 480px;
+    overflow: hidden;
+    position: relative;
+}
+
+
+
+.fruit-image img {
+    content: url(/images/gelosGourmet.png);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .5s ease;
+}
+
+.fruit-image:hover img {
+    transform: scale(1.04);
+}
+
+.fruit-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px clamp(35px, 7vw, 100px);
+}
+
+.fruit-content h2 {
+    font-size: clamp(35px, 4vw, 60px);
+    line-height: .95;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+}
+
+.fruit-content .price-box {
+    max-width: 476px;
+}
+
+
+.categories {
+    padding: 100px 0;
+    position: relative;
+}
+
+.categories::before {
+    content: "MASSAS • PICOLÉS • GELO GOURMET • PICOLÉS";
+    position: absolute;
+    top: 25px;
+    left: -5%;
+    width: 103%;
+    padding: 11px;
+    background: var(--purple-700);
+    color: white;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    text-align: center;
+    transform: rotate(-2deg);
+}
+
+.section-title {
+    max-width: 700px;
+    margin: 15px auto 45px;
+    color: var(--purple-950);
+    font-size: clamp(34px, 5vw, 58px);
+    line-height: .95;
+    text-align: center;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.product-card {
+    position: relative;
+    padding: 18px;
+    border-radius: 24px;
+    background: white;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: .3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-heavy);
+}
+
+.product-card::before {
+    content: "✦";
+    position: absolute;
+    top: 15px;
+    right: 18px;
+    font-size: 22px;
+    color: rgba(255,255,255,.7);
+}
+
+.product-title {
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 8px 15px;
+}
+
+.product-title span {
+    font-size: 28px;
+}
+
+.product-title h3 {
+    font-size: 18px;
+    color: var(--purple-950);
+}
+
+.product-card > img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    object-position: top center;
+    border-radius: 18px;
+    background: var(--lavender);
+}
+
+.product-price {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 17px 5px;
+}
+
+.product-price.single {
+    grid-template-columns: 1fr;
+}
+
+.product-price div {
+    padding: 10px;
+    border-radius: 12px;
+    background: #faf5fb;
+}
+
+.product-price strong {
+    display: block;
+    color: var(--purple-700);
+    font-size: 19px;
+}
+
+.product-price small {
+    color: var(--muted);
+    font-size: 9px;
+    text-transform: uppercase;
+}
+
+.product-card .button {
+    width: 100%;
+}
+
+
+.product-card.fruits {
+    transform: rotate(-1deg);
+}
+
+.product-card.milk {
+    transform: translateY(14px);
+}
+
+.product-card.crushed {
+    transform: rotate(1deg);
+}
+
+.product-card.fruits:hover,
+.product-card.milk:hover,
+.product-card.crushed:hover {
+    transform: translateY(-8px) rotate(0);
+}
+
+
+.important-card {
+    position: relative;
+    margin-top: 35px;
+    padding: 24px 30px;
+    border-radius: 18px;
+    background: var(--purple-950);
+    color: white;
+    overflow: hidden;
+}
+
+.important-card h3 {
+    margin-bottom: 8px;
+    color: var(--pink-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.important-card p {
+    position: relative;
+    z-index: 2;
+    margin-top: 6px;
+    color: #d9cbdc;
+    font-size: 12px;
+}
+
+.snowflake {
+    position: absolute;
+    right: 30px;
+    bottom: -20px;
+    font-size: 100px;
+    opacity: .08;
+}
+
+
+.benefits-bar {
+    position: relative;
+    padding: 55px max(20px, calc((100% - 1180px) / 2));
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    background: var(--purple-700);
+    color: white;
+}
+
+.benefit-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 10px;
+    border-right: 1px solid rgba(255,255,255,.15);
+}
+
+.benefit-item:last-child {
+    border-right: 0;
+}
+
+.benefit-item span {
+    font-size: 28px;
+}
+
+.benefit-item p {
+    max-width: 140px;
+    font-size: 10px;
+    line-height: 1.4;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+
+/* ========================
+            FOOTER
+   ======================== */
+
+.footer {
+    position: relative;
+    padding: 70px 0 0;
+    background: var(--purple-950);
+    color: white;
+    overflow: hidden;
+}
+
+.footer::before {
+    content: "FRUITSALLES";
+    position: absolute;
+    left: 50%;
+    bottom: -50px;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,.025);
+    font-size: clamp(90px, 16vw, 210px);
+    font-weight: 1000;
+    white-space: nowrap;
+}
+
+.footer-grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1fr;
+    gap: 60px;
+}
+
+.footer-column h3 {
+    margin-bottom: 20px;
+    color: var(--pink-light);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.footer-column h4 {
+    margin: 25px 0 8px;
+    color: #ddd0df;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+.footer-column > a {
+    display: block;
+    width: fit-content;
+    margin: 8px 0;
+    color: #cfc0d2;
+    font-size: 12px;
+    transition: .2s;
+}
+
+.footer-column > a:hover {
+    color: var(--pink-light);
+    transform: translateX(4px);
+}
+
+.footer-column p {
+    color: #bbaabc;
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+
+
+.box-images{
+    color: #bbaabc;
+    position: relative;
+    width: 200px;
+    padding-top: 10px;
+}
+
+.box-images-mensage {
+    display: none;
+    position: absolute;
+    top: 100%;
+    width: 337px;
+    height: 70px;
+    background: #2e0c3e42;
+    color: #bbaabc;
+    text-align: left;
+    font-weight: bolder;
+    font-size: 0.8em;
+}
+
+.box-images:hover .box-images-mensage {
+    display: block;
+}
+
+.company-info strong {
+    color: white;
+}
+
+.company-info small {
+    display: block;
+    margin-top: 20px;
+    color: #725e78;
+    font-size: 9px;
+}
+
+.footer-message {
+    position: relative;
+    z-index: 3;
+    margin-top: 60px;
+    padding: 20px;
+    background: var(--purple-800);
+    color: #e9d8ed;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+.flavors-card::before {
+    content: "\1F379";
+    position: absolute;
+    right: 45px;
+    top: 25px;
+    font-size: 65px;
+    opacity: .12;
+    transform: rotate(12deg);
+}
+
+.how-card::after {
+    content: "\1F353";
+    position: absolute;
+    right: 20px;
+    top: 18px;
+    font-size: 50px;
+    opacity: .08;
+}
+
+.fruit-content::after {
+    content: "\1F379";
+    position: absolute;
+    right: 8%;
+    bottom: 20px;
+    font-size: 90px;
+    opacity: .08;
+    transform: rotate(-12deg);
+}
+
+
+/* ========================
+          ANIMATIONS
+   ======================== */
+
+@keyframes floatingDrink {
+    0%, 100% {
+        transform: translateY(0) rotate(3deg);
+    }
+
+    50% {
+        transform: translateY(-12px) rotate(-1deg);
+    }
+}
+
+.hero-image img {
+    animation: floatingDrink 5s ease-in-out infinite;
+}
+
+
+/* ================================
+            SWEET-ALERT
+   ================================ */
+
+.fruitsalles-exit {
+    width: min(460px, 92%);
+    padding: 38px 32px 32px !important;
+
+    border-radius: 30px !important;
+
+    background:
+        radial-gradient(
+            circle at 90% 0%,
+            rgba(232, 92, 165, 0.18),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 0% 100%,
+            rgba(142, 63, 163, 0.12),
+            transparent 35%
+        ),
+        linear-gradient(
+            145deg,
+            #fff8f1 0%,
+            #f8edf8 55%,
+            #ead8ed 100%
+        ) !important;
+
+    border: 1px solid rgba(142, 63, 163, 0.15) !important;
+
+    box-shadow:
+        0 35px 90px rgba(35, 7, 45, 0.28),
+        0 10px 30px rgba(104, 33, 125, 0.12) !important;
+
+    overflow: hidden;
+}
+
+.fruitsalles-exit-title {
+    margin-top: 5px !important;
+    margin-bottom: 8px !important;
+
+    color: #321044 !important;
+
+    font-size: 28px !important;
+    font-weight: 900 !important;
+
+    line-height: 1.15 !important;
+    letter-spacing: -1px !important;
+}
+
+
+.exit-icon {
+    width: 82px;
+    height: 82px;
+
+    margin: 0 auto 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #8e3fa3 0%,
+            #68217d 55%,
+            #e85ca5 100%
+        );
+
+    color: #ffffff;
+
+    font-size: 38px;
+    line-height: 1;
+
+    box-shadow:
+        0 14px 35px rgba(104, 33, 125, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.35);
+
+    position: relative;
+}
+
+.exit-icon::before {
+    content: "";
+
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 30% 20%,
+            rgba(255, 255, 255, 0.35),
+            transparent 35%
+        );
+
+    pointer-events: none;
+}
+
+.exit-alert {
+    color: #806c85;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    text-align: center;
+}
+
+.exit-alert p {
+    margin: 8px 0;
+}
+
+
+.exit-main {
+    margin-top: 4px !important;
+
+    color: #321044;
+
+    font-size: 18px;
+
+    font-weight: 800;
+
+    letter-spacing: -0.2px;
+}
+
+.exit-main strong {
+    color: #68217d;
+}
+
+
+.exit-text {
+    max-width: 340px;
+
+    margin: 13px auto 0 !important;
+
+    color: #806c85;
+
+    font-size: 14px;
+
+    line-height: 1.65;
+}
+
+.exit-tag {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 18px;
+
+    padding: 9px 16px;
+
+    border-radius: 999px;
+
+    background:
+        rgba(142, 63, 163, 0.09);
+
+    border: 1px solid rgba(142, 63, 163, 0.12);
+
+    color: #68217d;
+
+    font-size: 10px;
+
+    font-weight: 900;
+
+    letter-spacing: 0.7px;
+
+    text-transform: uppercase;
+}
+
+.fruitsalles-exit .swal2-actions {
+    width: 100%;
+
+    margin-top: 27px !important;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+}
+
+.fruitsalles-exit-button {
+    min-height: 47px;
+
+    padding: 0 23px;
+
+    border: none;
+
+    border-radius: 999px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #8e3fa3 0%,
+            #68217d 100%
+        );
+
+    color: #ffffff;
+
+    font-family: inherit;
+
+    font-size: 11px;
+
+    font-weight: 900;
+
+    letter-spacing: 0.4px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 25px rgba(104, 33, 125, 0.25);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        filter 0.25s ease;
+}
+
+
+.fruitsalles-exit-button:hover {
+    transform: translateY(-3px);
+
+    filter: brightness(1.08);
+
+    box-shadow:
+        0 15px 32px rgba(104, 33, 125, 0.34);
+}
+
+.fruitsalles-exit-button:active {
+    transform: translateY(-1px);
+}
+
+.fruitsalles-exit-cancel {
+    min-height: 47px;
+
+    margin-right: 0 !important;
+
+    padding: 0 21px;
+
+    border: 1px solid rgba(104, 33, 125, 0.18);
+
+    border-radius: 999px;
+
+    background: rgba(255, 255, 255, 0.55);
+
+    color: #68217d;
+
+    font-family: inherit;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.2px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.fruitsalles-exit-cancel:hover {
+    background: rgba(142, 63, 163, 0.08);
+
+    border-color: rgba(104, 33, 125, 0.30);
+
+    transform: translateY(-2px);
+}
+
+
+.swal2-container {
+    background: rgba(22, 9, 31, 0.48) !important;
+
+    backdrop-filter: blur(5px);
+
+    -webkit-backdrop-filter: blur(5px);
+}
+
+
+@media (max-width: 520px) {
+
+    .fruitsalles-exit {
+        width: calc(100% - 28px);
+
+        padding: 30px 20px 25px !important;
+
+        border-radius: 25px !important;
+    }
+
+    .fruitsalles-exit-title {
+        font-size: 24px !important;
+    }
+
+    .exit-icon {
+        width: 70px;
+        height: 70px;
+
+        font-size: 32px;
+    }
+
+    .exit-main {
+        font-size: 16px;
+    }
+
+    .exit-text {
+        font-size: 13px;
+    }
+
+    .fruitsalles-exit .swal2-actions {
+        flex-direction: column;
+
+        width: 100%;
+    }
+
+    .fruitsalles-exit-button,
+    .fruitsalles-exit-cancel {
+        width: 100%;
+    }
+
+}
+
+
+
+/* ===========================
+            RESPONSIVE
+   =========================== */
+
+@media (max-width: 1024px) {
+
+    .hero-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 0;
+    }
+
+    .hero-text {
+        padding: 70px 0 20px;
+    }
+
+    .hero-text > p {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-benefits {
+        justify-content: center;
+    }
+
+    .hero-image {
+        height: 390px;
+    }
+
+    .hero-image img {
+        width: 330px;
+    }
+
+    .products-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .fruit-popsicle{
+        grid-template-columns: 1.6fr 1fr;
+    }
+
+    .fruit-content {
+        padding: 50px;
+    }
+
+
+    .fruit-image img{
+        content: url(/images/gelosGourmet400px.png);
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .flavorsDivImg{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .company-info {
+        grid-column: 1 / -1;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .container {
+        width: 100%;
+    }
+
+    .header-content {
+        min-height: 68px;
+    }
+
+    .social-menu a {
+        width: 38px;
+        height: 38px;
+        padding: 0;
+        justify-content: center;
+        font-size: 0;
+    }
+
+    .social-menu span {
+        font-size: 15px;
+    }
+
+    .hero {
+        min-height: auto;
+    }
+
+    .hero-content {
+        min-height: auto;
+    }
+
+    .hero h1 {
+        font-size: 48px;
+        letter-spacing: -2.5px;
+    }
+
+    .hero-benefits {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .benefit {
+        justify-content: center;
+    }
+
+    .hero-image {
+        height: 330px;
+    }
+
+    .hero-image::before {
+        width: 270px;
+        height: 270px;
+    }
+
+    .info-bar {
+        grid-template-columns: 1fr;
+        padding: 10px 20px;
+    }
+
+    .info-item {
+        border-right: 0;
+        border-bottom: 1px solid #eee5ef;
+        padding: 12px;
+    }
+
+    .info-item:last-child {
+        border-bottom: 0;
+    }
+
+    .products-intro,
+    .categories {
+        padding: 70px 0;
+    }
+
+    .flavors-card,
+    .how-card {
+        padding: 25px;
+    }
+
+    .price-box {
+        flex-direction: column;
+    }
+
+    .flavors {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .fruit-popsicle {
+        grid-template-columns: 1fr;
+    }
+
+    .fruit-image {
+        min-height: 330px;
+    }
+
+    .fruit-content {
+        padding: 60px 25px;
+    }
+
+    .fruit-content h2 {
+        font-size: 42px;
+    }
+
+    .categories-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .categories::before {
+        width: 101%;
+        content: "MASSAS • GELO GOURMET • PICOLÉS";
+    }
+
+    .product-card.fruits,
+    .product-card.milk,
+    .product-card.crushed {
+        transform: none;
+    }
+
+    .benefits-bar {
+        grid-template-columns: 1fr 1fr;
+        padding: 35px 15px;
+    }
+
+    .benefit-item {
+        border-right: 0;
+    }
+
+    .footer {
+        padding-top: 50px;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+
+    .company-info {
+        grid-column: auto;
+    }
+
+    .footer{
+        padding-left: 5px;
+    }
+
+    .box-images-mensage {
+        width: 380px;
+        height: auto;
+    }
+}
+
+
+@media (max-width: 430px) {
+
+    .logo-text strong {
+        font-size: 18px;
+    }
+
+    .logo-text small {
+        font-size: 8px;
+    }
+
+    .hero h1 {
+        font-size: 42px;
+    }
+
+    .hero-image {
+        height: 290px;
+    }
+
+    .hero-image img {
+        width: 280px;
+    }
+
+    .hero-text{
+        padding: 0px 5px;
+    }
+
+    .section-title {
+        font-size: 38px;
+    }
+
+    .product-card::before {
+        content: "";
+    }
+
+    .hero-image::after {
+        content: "";
+    }
+
+    .benefits-bar {
+        grid-template-columns: 1fr;
+    }
+
+    .benefit-item {
+        justify-content: flex-start;
+        border-bottom: 1px solid rgba(255,255,255,.1);
+        padding: 15px;
+    }
+
+    .product-price {
+        grid-template-columns: 1fr;
+    }
+    
+    .flavorsImg{
+        display: block;
+    }
+
+}
