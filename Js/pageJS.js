@@ -228,7 +228,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         gourmetIce: {
             name: "Gelos Gourmet",
-            flavors: ["ainda falta valor aqui"],
+            flavors: ["Morango", "Abacaxi", "Maracuja", "Limão", "Melancia", "Maçã verde", "Uva"],
             price: 4.00,
             wholesalePrice: 2.20,
             wholesaleMinQuantity: 30
