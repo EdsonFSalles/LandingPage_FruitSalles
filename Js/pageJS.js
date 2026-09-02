@@ -557,12 +557,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     createModal();
-    if (document.readyState === 'complete') {
-        setupOrderButtons();
-    } else {
-        window.addEventListener('load', () => {
-            setTimeout(setupOrderButtons, 300);
-        });
-    }
+    setupOrderButtons();
     console.log('\u{1F366} FruitSalles Order System initialized!');
 });
