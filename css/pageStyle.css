@@ -774,7 +774,7 @@ a {
     transform: rotate(-1deg);
 }
 
-.product-card.milk {
+.product-card.item {
     transform: translateY(14px);
 }
 
@@ -783,7 +783,7 @@ a {
 }
 
 .product-card.fruits:hover,
-.product-card.milk:hover,
+.product-card.item:hover,
 .product-card.crushed:hover {
     transform: translateY(-8px) rotate(0);
 }
@@ -1766,7 +1766,7 @@ body.swal2-shown > .order-modal {
     }
 
     .product-card.fruits,
-    .product-card.milk,
+    .product-card.item,
     .product-card.crushed {
         transform: none;
     }
