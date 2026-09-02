@@ -71,16 +71,148 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    document.addEventListener("mouseout", (event) => {
-        if (!event.relatedTarget) {
-            if (event.clientY <= 5) {
-                showExitAlert();
+});
+
+//          MODAL-ORDER-PAGE
+
+document.addEventListener("DOMContentLoaded", () => {
+    let openAlert = false;
+    let detectExit = true;
+
+    const whatsappURL = "https://wa.me/5567998933945?text=Olá!%20Gostaria%20de%20estar%20realizando%20um%20pedido";
+    
+    function showExitAlert() {
+        if (openAlert || !detectExit) {
+            return;
+        }
+        openAlert = true;
+        Swal.fire({
+            title: "Antes de você ir... \u{1F49C}",
+            html: `
+                <div class="exit-alert">
+                    <div class="exit-icon">\u{1F4AC}</div>
+                    <p class="exit-main">
+                        Visite nosso <strong>WhatsApp!</strong>
+                    </p>
+                    <p class="exit-text">
+                        Lá tiramos todas as suas dúvidas
+                        e ajudamos você com o que precisar.
+                    </p>
+                    <span class="exit-tag">
+                        \u{1F49C} Estamos esperando por você!
+                    </span>
+                </div>
+            `,
+            showCancelButton: true,
+            confirmButtonText: "Ir para o WhatsApp \u{1F4AC}",
+            cancelButtonText: "Continuar na página",
+            customClass: {
+                popup: "fruitsalles-exit",
+                title: "fruitsalles-exit-title",
+                confirmButton: "fruitsalles-exit-button",
+                cancelButton: "fruitsalles-exit-cancel"
+            },
+            buttonsStyling: false,
+            reverseButtons: true,
+            allowOutsideClick: false,
+            allowEscapeKey: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.open(whatsappURL, "_blank");
+                openAlert = false;
+            } else {
+                openAlert = false;
             }
+        });
+    }
+
+    history.pushState(null, "", location.href);
+
+    window.addEventListener("popstate", () => {
+        if (openAlert) {
+            return;
+        }
+        history.pushState(null, "", location.href);
+        showExitAlert();
+    });
+
+    document.addEventListener("mouseout", (event) => {
+        if (!event.relatedTarget && event.clientY <= 5) {
+            showExitAlert();
         }
     });
 });
 
-//          MODAL-ORDER-PAGE
+
+// ORDER MODAL 
+
+document.addEventListener("DOMContentLoaded", () => {
+    let openAlert = false;
+    let detectExit = true;
+
+    const whatsappURL = "https://wa.me/5567998933945?text=Olá!%20Gostaria%20de%20estar%20realizando%20um%20pedido";
+    
+    function showExitAlert() {
+        if (openAlert || !detectExit) {
+            return;
+        }
+        openAlert = true;
+        Swal.fire({
+            title: "Antes de você ir... \u{1F49C}",
+            html: `
+                <div class="exit-alert">
+                    <div class="exit-icon">\u{1F4AC}</div>
+                    <p class="exit-main">
+                        Visite nosso <strong>WhatsApp!</strong>
+                    </p>
+                    <p class="exit-text">
+                        Lá tiramos todas as suas dúvidas
+                        e ajudamos você com o que precisar.
+                    </p>
+                    <span class="exit-tag">
+                        \u{1F49C} Estamos esperando por você!
+                    </span>
+                </div>
+            `,
+            showCancelButton: true,
+            confirmButtonText: "Ir para o WhatsApp \u{1F4AC}",
+            cancelButtonText: "Continuar na página",
+            customClass: {
+                popup: "fruitsalles-exit",
+                title: "fruitsalles-exit-title",
+                confirmButton: "fruitsalles-exit-button",
+                cancelButton: "fruitsalles-exit-cancel"
+            },
+            buttonsStyling: false,
+            reverseButtons: true,
+            allowOutsideClick: false,
+            allowEscapeKey: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.open(whatsappURL, "_blank");
+                openAlert = false;
+            } else {
+                openAlert = false;
+            }
+        });
+    }
+
+    history.pushState(null, "", location.href);
+
+    window.addEventListener("popstate", () => {
+        if (openAlert) {
+            return;
+        }
+        history.pushState(null, "", location.href);
+        showExitAlert();
+    });
+
+    document.addEventListener("mouseout", (event) => {
+        if (!event.relatedTarget && event.clientY <= 5) {
+            showExitAlert();
+        }
+    });
+});
 
 document.addEventListener("DOMContentLoaded", () => {
     const WHATSAPP_NUMBER = "5567998933945";
@@ -89,63 +221,63 @@ document.addEventListener("DOMContentLoaded", () => {
     const products = {
         flavoredIce: {
             name: "Gelos Saborizados",
-            flavors: ["Limão", "Morango", "Abacaxi", "Melancia", "Água de coco", "Maracujá", "Maçã verde", "Uva", "Energético", "Menta"],
+            flavors: ["Limão", "Morango", "Melancia", "Água de coco", "Maracujá", "Maçã verde", "Uva", "Energético", "Menta", "Bob Marley", "Laranja"],
             price: 3.00,
             wholesalePrice: 1.50,
             wholesaleMinQuantity: 30
         },
         gourmetIce: {
             name: "Gelos Gourmet",
-            flavors: ["Morango", "Chocolate", "Coco", "Napolitano"],
+            flavors: ["ainda falta valor aqui"],
             price: 4.00,
             wholesalePrice: 2.20,
             wholesaleMinQuantity: 30
         },
         fruitPopsicle: {
             name: "Picolés de Frutas",
-            flavors: ["Morango", "Abacaxi", "Maracujá", "Uva", "Limão"],
+            flavors: ["Morango", "Abacaxi", "Limão","Groselha", "Maracujá", "Melancia", "Uva", "Açaí"],
             price: 2.00,
             wholesalePrice: 1.35,
             wholesaleMinQuantity: 15
         },
         milkPopsicle: {
             name: "Picolés de Leite",
-            flavors: ["Chocolate", "Morango", "Baunilha", "Coco"],
+            flavors: ["Leite Condensado", "Chocolate", "Coco branco", "Coco queimado", "Doce de leite", "Milho verde", "Morango ao leite", "Blue Ice"],
             price: 3.00,
             wholesalePrice: 2.00,
             wholesaleMinQuantity: 10
         },
         specialMoreninha: {
             name: "Especial Moreninha",
-            flavors: ["Tradicional"],
+            flavors: ["Tradicional/Cobertura de chocolate"],
             price: 8.00,
             wholesalePrice: null,
             wholesaleMinQuantity: null
         },
         cup300ml: {
             name: "Copo de Massa 300ml",
-            flavors: ["Chocolate", "Morango", "Napolitano"],
+            flavors: ["Morango", "Chocolate", "Napolitano", "Ninho", "Ninho trufado", "Leite condensado", "Milho verde", "Flocos"],
             price: 10.00,
             wholesalePrice: null,
             wholesaleMinQuantity: null
         },
         pot1_5kg: {
             name: "Pote de Massa 1.5kg",
-            flavors: ["Chocolate", "Morango", "Napolitano"],
+            flavors: ["Morango", "Chocolate", "Napolitano", "Ninho", "Ninho trufado", "Leite condensado", "Milho verde", "Flocos"],
             price: 22.00,
             wholesalePrice: null,
             wholesaleMinQuantity: null
         },
         pot5kg: {
             name: "Pote de Massa 5kg",
-            flavors: ["Chocolate", "Morango", "Napolitano"],
+            flavors: ["Morango", "Chocolate", "Napolitano", "Ninho", "Ninho trufado", "Leite condensado", "Milho verde", "Flocos"],
             price: 80.00,
             wholesalePrice: null,
             wholesaleMinQuantity: null
         },
         bucket10kg: {
             name: "Balde de Massa 10kg",
-            flavors: ["Chocolate", "Morango", "Napolitano"],
+            flavors: ["Morango", "Chocolate", "Napolitano", "Ninho", "Ninho trufado", "Leite condensado", "Milho verde", "Flocos"],
             price: 150.00,
             wholesalePrice: null,
             wholesaleMinQuantity: null
@@ -168,9 +300,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function createModal() {
         const modalHTML = `
-            <div id="orderModal" class="modal-pedido" style="display: none;">
-                <div class="modal-pedido-content">
-                    <span class="modal-pedido-fechar">&times;</span>
+            <div id="orderModal" class="order-modal" style="display: none;">
+                <div class="order-modal-content">
+                    <span class="order-modal-close">&times;</span>
                     <div id="orderModalBody">
                         <!-- Dynamic content will be inserted here -->
                     </div>
@@ -181,6 +313,22 @@ document.addEventListener("DOMContentLoaded", () => {
         document.body.insertAdjacentHTML('beforeend', modalHTML);
     }
 
+    function showAlert(icon, title, text) {
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({
+                icon: icon,
+                title: title,
+                text: text,
+                confirmButtonColor: '#8e3fa3',
+                confirmButtonText: 'OK',
+                timer: 3000,
+                timerProgressBar: true
+            });
+        } else {
+            alert(`${title}\n\n${text}`);
+        }
+    }
+
     function openModal(productId) {
         const modal = document.getElementById('orderModal');
         const body = document.getElementById('orderModalBody');
@@ -189,23 +337,23 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!product) return;
 
         let html = `
-            <h2>🍦 ${product.name}</h2>
-            <div class="modal-preco">
+            <h2>\u{1F366} ${product.name}</h2>
+            <div class="order-price">
                 <p>
                     <strong>R$ ${product.price.toFixed(2)}</strong> / unidade
-                    ${product.wholesalePrice ? `<br><span class="preco-atacado">📦 Atacado (${product.wholesaleMinQuantity}+ unid): R$ ${product.wholesalePrice.toFixed(2)}/unidade</span>` : ''}
+                    ${product.wholesalePrice ? `<br><span class="price-wholesale">\u{1F4E6} Atacado (${product.wholesaleMinQuantity}+ unid): R$ ${product.wholesalePrice.toFixed(2)}/unidade</span>` : ''}
                 </p>
             </div>
             
-            <div class="modal-sabores">
-                <label><strong>🍭 Selecione os sabores:</strong></label>
-                <div class="modal-sabores-grid">
+            <div class="order-flavors">
+                <label><strong> Selecione os sabores:</strong></label>
+                <div class="order-flavors-grid">
         `;
 
         product.flavors.forEach(flavor => {
             const id = `flavor_${flavor.replace(/\s/g, '_').normalize('NFD').replace(/[\u0300-\u036f]/g, '')}`;
             html += `
-                <div class="modal-sabor-item">
+                <div class="order-flavor-item">
                     <input type="checkbox" class="flavor-checkbox" value="${flavor}" id="${id}">
                     <label for="${id}">${flavor}</label>
                 </div>
@@ -214,20 +362,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
         html += `
                 </div>
+                <div id="flavorError" class="order-error" style="display: none; color: #e74c3c; font-size: 13px; margin-top: 8px;">
+                    \u{26A0}\u{FE0F} Selecione pelo menos um sabor!
+                </div>
             </div>
 
-            <div class="modal-quantidade">
-                <label for="quantity">📊 Quantidade:</label>
+            <div class="order-quantity">
+                <label for="quantity">\u{1F4CA} Quantidade:</label>
                 <input type="number" id="quantity" min="1" value="1">
+                <div id="quantityError" class="order-error" style="display: none; color: #e74c3c; font-size: 13px; margin-top: 5px;">
+                    \u{26A0}\u{FE0F} Informe uma quantidade válida!
+                </div>
             </div>
 
-            <div class="modal-observacao">
-                <label for="observation">📝 Observações (opcional):</label>
+            <div class="order-observation">
+                <label for="observation">\u{1F4DD} Observações (opcional):</label>
                 <textarea id="observation" rows="2" placeholder="Ex: sem açúcar, entrega para..."></textarea>
             </div>
 
-            <button id="sendOrderBtn" class="button button-enviar" data-product="${productId}">
-                💚 ENVIAR PEDIDO PARA O WHATSAPP
+            <button id="sendOrderBtn" class="button btn-send-order" data-product="${productId}">
+                \u{1F49A} ENVIAR PEDIDO PARA O WHATSAPP
             </button>
         `;
 
@@ -239,7 +393,6 @@ document.addEventListener("DOMContentLoaded", () => {
         setupModalEvents(productId);
     }
 
-
     function closeModal() {
         const modal = document.getElementById('orderModal');
         modal.style.display = 'none';
@@ -247,7 +400,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function setupModalEvents(productId) {
-        const closeBtn = document.querySelector('.modal-pedido-fechar');
+        const closeBtn = document.querySelector('.order-modal-close');
         closeBtn.addEventListener('click', closeModal);
 
         const modal = document.getElementById('orderModal');
@@ -267,6 +420,16 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
+        quantityInput.addEventListener('input', () => {
+            document.getElementById('quantityError').style.display = 'none';
+        });
+
+        document.querySelectorAll('.flavor-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                document.getElementById('flavorError').style.display = 'none';
+            });
+        });
+
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && modal.style.display === 'flex') {
                 closeModal();
@@ -275,31 +438,29 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function sendOrder(productId) {
-        const product = products[productId];
-        
+        const product = products[productId]; 
         const checkboxes = document.querySelectorAll('.flavor-checkbox:checked');
         const selectedFlavors = Array.from(checkboxes).map(cb => cb.value);
         
-        const quantity = parseInt(document.getElementById('quantity').value) || 1;
+        const quantity = parseInt(document.getElementById('quantity').value) || 0;
         const observation = document.getElementById('observation').value.trim();
 
+        let hasError = false;
+
         if (selectedFlavors.length === 0) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Ops!',
-                text: 'Por favor, selecione pelo menos um sabor! 🍓',
-                confirmButtonColor: '#8e3fa3'
-            });
-            return;
+            document.getElementById('flavorError').style.display = 'block';
+            document.querySelector('.order-flavors').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            hasError = true;
         }
 
         if (quantity < 1) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Ops!',
-                text: 'Por favor, informe uma quantidade válida!',
-                confirmButtonColor: '#8e3fa3'
-            });
+            document.getElementById('quantityError').style.display = 'block';
+            document.getElementById('quantity').focus();
+            hasError = true;
+        }
+
+        if (hasError) {
+            showAlert('warning', 'Ops!', 'Por favor, corrija os campos destacados acima.');
             return;
         }
 
@@ -309,18 +470,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         const total = unitPrice * quantity;
 
-        let message = `🍦 *FRUITSALLES - NOVO PEDIDO* 🍦%0A%0A`;
-        message += `📦 *Produto:* ${product.name}%0A`;
-        message += `🍭 *Sabores:* ${selectedFlavors.join(', ')}%0A`;
-        message += `📊 *Quantidade:* ${quantity} unidade(s)%0A`;
-        message += `💰 *Valor unitário:* R$ ${unitPrice.toFixed(2)}%0A`;
-        message += `💵 *Total:* R$ ${total.toFixed(2)}%0A%0A`;
+        let message = `*FRUITSALLES - NOVO PEDIDO* %0A%0A`;
+        message += `*Produto:* ${product.name}%0A`;
+        message += `*Sabores:* ${selectedFlavors.join(', ')}%0A`;
+        message += `*Quantidade:* ${quantity} unidade(s)%0A`;
+        message += `*Valor unitário:* R$ ${unitPrice.toFixed(2)}%0A`;
+        message += `*Total:* R$ ${total.toFixed(2)}%0A%0A`;
 
         if (observation) {
-            message += `📝 *Observações:* ${observation}%0A%0A`;
+            message += `*Observações:* ${observation}%0A%0A`;
         }
 
-        message += `👋 Gostaria de confirmar meu pedido!`;
+        message += `Olá! Gostaria de confirmar meu pedido.`;
 
         const url = WHATSAPP_URL + message;
         window.open(url, '_blank');
@@ -395,9 +556,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-
     createModal();
-
     if (document.readyState === 'complete') {
         setupOrderButtons();
     } else {
@@ -405,6 +564,5 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(setupOrderButtons, 300);
         });
     }
-
-    console.log('🍦 FruitSalles Order System initialized!');
+    console.log('\u{1F366} FruitSalles Order System initialized!');
 });

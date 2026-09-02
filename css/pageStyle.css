@@ -71,7 +71,6 @@ a {
 
 .container {
     width: min(var(--container), calc(100% - 40px));
-    object-position: top;
     margin: auto;
 }
 
@@ -1045,6 +1044,9 @@ a {
     padding: 20px;
     animation: fadeInModal 0.3s ease;
 }
+body.swal2-shown > .order-modal {
+    display: none !important;
+}
 
 @keyframes fadeInModal {
     from { opacity: 0; transform: scale(0.95) translateY(20px); }
@@ -1331,9 +1333,7 @@ a {
 .fruitsalles-exit {
     width: min(460px, 92%);
     padding: 38px 32px 32px !important;
-
     border-radius: 30px !important;
-
     background:
         radial-gradient(
             circle at 90% 0%,
@@ -1353,7 +1353,6 @@ a {
         ) !important;
 
     border: 1px solid rgba(142, 63, 163, 0.15) !important;
-
     box-shadow:
         0 35px 90px rgba(35, 7, 45, 0.28),
         0 10px 30px rgba(104, 33, 125, 0.12) !important;
@@ -1364,12 +1363,9 @@ a {
 .fruitsalles-exit-title {
     margin-top: 5px !important;
     margin-bottom: 8px !important;
-
     color: #321044 !important;
-
     font-size: 28px !important;
     font-weight: 900 !important;
-
     line-height: 1.15 !important;
     letter-spacing: -1px !important;
 }
@@ -1378,15 +1374,11 @@ a {
 .exit-icon {
     width: 82px;
     height: 82px;
-
     margin: 0 auto 20px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     border-radius: 50%;
-
     background:
         linear-gradient(
             135deg,
@@ -1394,46 +1386,34 @@ a {
             #68217d 55%,
             #e85ca5 100%
         );
-
     color: #ffffff;
-
     font-size: 38px;
     line-height: 1;
-
     box-shadow:
         0 14px 35px rgba(104, 33, 125, 0.28),
         inset 0 1px 0 rgba(255, 255, 255, 0.35);
-
     position: relative;
 }
 
 .exit-icon::before {
     content: "";
-
     position: absolute;
-
     width: 100%;
     height: 100%;
-
     border-radius: 50%;
-
     background:
         radial-gradient(
             circle at 30% 20%,
             rgba(255, 255, 255, 0.35),
             transparent 35%
         );
-
     pointer-events: none;
 }
 
 .exit-alert {
     color: #806c85;
-
     font-size: 14px;
-
     line-height: 1.6;
-
     text-align: center;
 }
 
@@ -1444,13 +1424,9 @@ a {
 
 .exit-main {
     margin-top: 4px !important;
-
     color: #321044;
-
     font-size: 18px;
-
     font-weight: 800;
-
     letter-spacing: -0.2px;
 }
 
@@ -1461,88 +1437,57 @@ a {
 
 .exit-text {
     max-width: 340px;
-
     margin: 13px auto 0 !important;
-
     color: #806c85;
-
     font-size: 14px;
-
     line-height: 1.65;
 }
 
 .exit-tag {
     display: inline-flex;
-
     align-items: center;
     justify-content: center;
-
     margin-top: 18px;
-
     padding: 9px 16px;
-
     border-radius: 999px;
-
     background:
         rgba(142, 63, 163, 0.09);
-
     border: 1px solid rgba(142, 63, 163, 0.12);
-
     color: #68217d;
-
     font-size: 10px;
-
     font-weight: 900;
-
     letter-spacing: 0.7px;
-
     text-transform: uppercase;
 }
 
 .fruitsalles-exit .swal2-actions {
     width: 100%;
-
     margin-top: 27px !important;
-
     display: flex;
-
     align-items: center;
     justify-content: center;
-
     gap: 10px;
 }
 
 .fruitsalles-exit-button {
     min-height: 47px;
-
     padding: 0 23px;
-
     border: none;
-
     border-radius: 999px;
-
     background:
         linear-gradient(
             135deg,
             #8e3fa3 0%,
             #68217d 100%
         );
-
     color: #ffffff;
-
     font-family: inherit;
-
     font-size: 11px;
-
     font-weight: 900;
-
     letter-spacing: 0.4px;
-
     cursor: pointer;
-
     box-shadow:
         0 10px 25px rgba(104, 33, 125, 0.25);
-
     transition:
         transform 0.25s ease,
         box-shadow 0.25s ease,
@@ -1552,9 +1497,7 @@ a {
 
 .fruitsalles-exit-button:hover {
     transform: translateY(-3px);
-
     filter: brightness(1.08);
-
     box-shadow:
         0 15px 32px rgba(104, 33, 125, 0.34);
 }
@@ -1565,29 +1508,17 @@ a {
 
 .fruitsalles-exit-cancel {
     min-height: 47px;
-
     margin-right: 0 !important;
-
     padding: 0 21px;
-
     border: 1px solid rgba(104, 33, 125, 0.18);
-
     border-radius: 999px;
-
     background: rgba(255, 255, 255, 0.55);
-
     color: #68217d;
-
     font-family: inherit;
-
     font-size: 11px;
-
     font-weight: 800;
-
     letter-spacing: 0.2px;
-
     cursor: pointer;
-
     transition:
         background 0.25s ease,
         border-color 0.25s ease,
@@ -1597,29 +1528,27 @@ a {
 
 .fruitsalles-exit-cancel:hover {
     background: rgba(142, 63, 163, 0.08);
-
     border-color: rgba(104, 33, 125, 0.30);
-
     transform: translateY(-2px);
 }
 
 
 .swal2-container {
     background: rgba(22, 9, 31, 0.48) !important;
-
+    z-index: 999999 !important;
     backdrop-filter: blur(5px);
-
     -webkit-backdrop-filter: blur(5px);
+}
+
+.swal2-popup {
+    z-index: 999999 !important;
 }
 
 
 @media (max-width: 520px) {
-
     .fruitsalles-exit {
         width: calc(100% - 28px);
-
         padding: 30px 20px 25px !important;
-
         border-radius: 25px !important;
     }
 
@@ -1630,7 +1559,6 @@ a {
     .exit-icon {
         width: 70px;
         height: 70px;
-
         font-size: 32px;
     }
 
@@ -1644,7 +1572,6 @@ a {
 
     .fruitsalles-exit .swal2-actions {
         flex-direction: column;
-
         width: 100%;
     }
 
