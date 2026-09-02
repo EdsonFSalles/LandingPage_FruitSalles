@@ -619,7 +619,7 @@ a {
 
 
 .fruit-image img {
-    content: url(images/gelosGourmet.png);
+    content: url(../images/gelosGourmet.png);
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -1410,7 +1410,7 @@ a {
 
 
     .fruit-image img{
-        content: url(images/gelosGourmet400px.png);
+        content: url(../images/gelosGourmet400px.png);
     }
 
     .footer-grid {
