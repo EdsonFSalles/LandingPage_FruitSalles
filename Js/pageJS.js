@@ -1,78 +1,3 @@
-document.addEventListener("DOMContentLoaded", () => {
-    let openAlert = false;
-    let detectExit = true;
-
-    const whatsappURL ="https://wa.me/5567998933945?text=Olá!%20Gostaria%20de%20estar%20realizando%20um%20pedido";
-    function showExitAlert() {
-        if (openAlert || !detectExit) {
-            return;
-        }
-        openAlert = true;
-        Swal.fire({
-            title: "Antes de você ir... \u{1F49C}",
-            html: `
-                <div class="exit-alert">
-                    <div class="exit-icon">\u{1F4AC}</div>
-                    <p class="exit-main">
-                        Visite nosso <strong>WhatsApp!</strong>
-                    </p>
-
-                    <p class="exit-text">
-                        Lá tiramos todas as suas dúvidas
-                        e ajudamos você com o que precisar.
-                    </p>
-
-                    <span class="exit-tag">
-                        \u{1F49C} Estamos esperando por você!
-                    </span>
-
-                </div>
-            `,
-            showCancelButton: true,
-
-            confirmButtonText: "Ir para o WhatsApp \u{1F4AC}",
-            cancelButtonText: "Continuar na página",
-            customClass: {
-                popup: "fruitsalles-exit",
-                title: "fruitsalles-exit-title",
-                confirmButton: "fruitsalles-exit-button",
-                cancelButton: "fruitsalles-exit-cancel"
-            },
-
-            buttonsStyling: false,
-            reverseButtons: true,
-            allowOutsideClick: false,
-            allowEscapeKey: true
-        }).then((result) => {
-
-            if (result.isConfirmed) {
-                window.open(whatsappURL, "_blank");
-                openAlert = false;
-            } else {
-                openAlert = false;
-            }
-        });
-    }
-
-    history.pushState(null, "", location.href);
-
-    window.addEventListener("popstate", () => {
-        if (openAlert) {
-            return;
-        }
-
-        history.pushState(null, "", location.href);
-        showExitAlert();
-    });
-
-    document.addEventListener("mouseout", (event) => {
-        if (!event.relatedTarget && event.clientY <= 5) {
-            showExitAlert();
-        }
-    });
-
-});
-
 //          MODAL-ORDER-PAGE
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -80,78 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let detectExit = true;
 
     const whatsappURL = "https://wa.me/5567998933945?text=Olá!%20Gostaria%20de%20estar%20realizando%20um%20pedido";
-    
-    function showExitAlert() {
-        if (openAlert || !detectExit) {
-            return;
-        }
-        openAlert = true;
-        Swal.fire({
-            title: "Antes de você ir... \u{1F49C}",
-            html: `
-                <div class="exit-alert">
-                    <div class="exit-icon">\u{1F4AC}</div>
-                    <p class="exit-main">
-                        Visite nosso <strong>WhatsApp!</strong>
-                    </p>
-                    <p class="exit-text">
-                        Lá tiramos todas as suas dúvidas
-                        e ajudamos você com o que precisar.
-                    </p>
-                    <span class="exit-tag">
-                        \u{1F49C} Estamos esperando por você!
-                    </span>
-                </div>
-            `,
-            showCancelButton: true,
-            confirmButtonText: "Ir para o WhatsApp \u{1F4AC}",
-            cancelButtonText: "Continuar na página",
-            customClass: {
-                popup: "fruitsalles-exit",
-                title: "fruitsalles-exit-title",
-                confirmButton: "fruitsalles-exit-button",
-                cancelButton: "fruitsalles-exit-cancel"
-            },
-            buttonsStyling: false,
-            reverseButtons: true,
-            allowOutsideClick: false,
-            allowEscapeKey: true
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.open(whatsappURL, "_blank");
-                openAlert = false;
-            } else {
-                openAlert = false;
-            }
-        });
-    }
 
-    history.pushState(null, "", location.href);
-
-    window.addEventListener("popstate", () => {
-        if (openAlert) {
-            return;
-        }
-        history.pushState(null, "", location.href);
-        showExitAlert();
-    });
-
-    document.addEventListener("mouseout", (event) => {
-        if (!event.relatedTarget && event.clientY <= 5) {
-            showExitAlert();
-        }
-    });
-});
-
-
-// ORDER MODAL 
-
-document.addEventListener("DOMContentLoaded", () => {
-    let openAlert = false;
-    let detectExit = true;
-
-    const whatsappURL = "https://wa.me/5567998933945?text=Olá!%20Gostaria%20de%20estar%20realizando%20um%20pedido";
-    
     function showExitAlert() {
         if (openAlert || !detectExit) {
             return;
@@ -221,31 +75,35 @@ document.addEventListener("DOMContentLoaded", () => {
     const products = {
         flavoredIce: {
             name: "Gelos Saborizados",
-            flavors: ["Limão", "Morango", "Melancia", "Água de coco", "Maracujá", "Maçã verde", "Uva", "Energético", "Menta", "Bob Marley", "Laranja"],
+            flavors: ["Limão", "Morango", "Melancia", "Água de coco", "Maracujá", "Maçã verde", "Uva", "Energético", "Menta", "Bob Marley", "Laranja", "Sortidos"],
             price: 3.00,
             wholesalePrice: 1.50,
-            wholesaleMinQuantity: 30
+            wholesaleMinQuantity: 30,
+            sortidosIncrement: 10
         },
         gourmetIce: {
             name: "Gelos Gourmet",
-            flavors: ["Morango", "Abacaxi", "Maracuja", "Limão", "Melancia", "Maçã verde", "Uva"],
+            flavors: ["Morango", "Abacaxi", "Maracuja", "Limão", "Melancia", "Maçã verde", "Uva", "Sortidos"],
             price: 4.00,
             wholesalePrice: 2.20,
-            wholesaleMinQuantity: 30
+            wholesaleMinQuantity: 30,
+            sortidosIncrement: 10
         },
         fruitPopsicle: {
             name: "Picolés de Frutas",
-            flavors: ["Morango", "Abacaxi", "Limão","Groselha", "Maracujá", "Melancia", "Uva", "Açaí"],
+            flavors: ["Morango", "Abacaxi", "Limão", "Groselha", "Maracujá", "Melancia", "Uva", "Açaí", "Sortidos"],
             price: 2.00,
             wholesalePrice: 1.35,
-            wholesaleMinQuantity: 15
+            wholesaleMinQuantity: 15,
+            sortidosIncrement: 5
         },
         milkPopsicle: {
             name: "Picolés de Leite",
-            flavors: ["Leite Condensado", "Chocolate", "Coco branco", "Coco queimado", "Doce de leite", "Milho verde", "Morango ao leite", "Blue Ice"],
+            flavors: ["Leite Condensado", "Chocolate", "Coco branco", "Coco queimado", "Doce de leite", "Milho verde", "Morango ao leite", "Blue Ice", "Sortidos"],
             price: 3.00,
             wholesalePrice: 2.00,
-            wholesaleMinQuantity: 10
+            wholesaleMinQuantity: 10,
+            sortidosIncrement: 5
         },
         specialMoreninha: {
             name: "Especial Moreninha",
@@ -256,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         cup300ml: {
             name: "Copo de Massa 300ml",
-            flavors: ["Morango", "Chocolate", "Napolitano", "Ninho", "Ninho trufado", "Leite condensado", "Milho verde", "Flocos"],
+            flavors: ["Morango", "Chocolate", "Napolitano", "Ninho", "Ninho trufado", "Leite condensado", "Milho verde", "Flocos", "Sortidos"],
             price: 10.00,
             wholesalePrice: null,
             wholesaleMinQuantity: null
@@ -304,13 +162,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="order-modal-content">
                     <span class="order-modal-close">&times;</span>
                     <div id="orderModalBody">
-                        <!-- Dynamic content will be inserted here -->
+                        <!-- Dynamic content -->
                     </div>
                 </div>
             </div>
         `;
 
         document.body.insertAdjacentHTML('beforeend', modalHTML);
+        document.addEventListener('keydown', (e) => {
+            const modal = document.getElementById('orderModal');
+            if (e.key === 'Escape' && modal && modal.style.display === 'flex') {
+                closeModal();
+            }
+        });
     }
 
     function showAlert(icon, title, text) {
@@ -350,34 +214,90 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="order-flavors-grid">
         `;
 
-        product.flavors.forEach(flavor => {
-            const id = `flavor_${flavor.replace(/\s/g, '_').normalize('NFD').replace(/[\u0300-\u036f]/g, '')}`;
+        product.flavors.forEach((flavor, index) => {
+            const id = `flavor_${index}`;
+            const increment =
+                flavor.toLowerCase() === 'sortidos'
+                    ? product.sortidosIncrement
+                    : 1;
             html += `
                 <div class="order-flavor-item">
-                    <input type="checkbox" class="flavor-checkbox" value="${flavor}" id="${id}">
-                    <label for="${id}">${flavor}</label>
+                <div class="flavor-name">
+                    ${flavor}
                 </div>
+
+                <div class="flavor-controls">
+                    <button
+                        type="button"
+                        class="flavor-minus"
+                        data-flavor="${flavor}"
+                        data-increment="${increment}">
+                        −
+                    </button>
+                    <span
+                        class="flavor-quantity"
+                        id="${id}"
+                        data-flavor="${flavor}"
+                        data-quantity="0">
+                        0
+                    </span>
+                    <button
+                        type="button"
+                        class="flavor-plus"
+                        data-flavor="${flavor}"
+                        data-increment="${increment}">
+                        +
+                    </button>
+                </div>
+                ${flavor.toLowerCase() === 'sortidos'
+                    ? `<small class="assorted-info">
+                           \u{1F4E6} Pacote com ${increment} unidades
+                       </small>`
+                    : ''
+                }
+            </div>
             `;
         });
 
         html += `
-                </div>
-                <div id="flavorError" class="order-error" style="display: none; color: #e74c3c; font-size: 13px; margin-top: 8px;">
-                    \u{26A0}\u{FE0F} Selecione pelo menos um sabor!
+            </div>
+                <div
+                    id="flavorError"
+                    class="order-error"
+                    style="
+                        display: none;
+                        color: #e74c3c;
+                        font-size: 13px;
+                        margin-top: 8px;
+                    ">
+                    \u{26A0}\u{FE0F}  Selecione pelo menos uma quantidade!
                 </div>
             </div>
 
             <div class="order-quantity">
-                <label for="quantity">\u{1F4CA} Quantidade:</label>
-                <input type="number" id="quantity" min="1" value="1">
-                <div id="quantityError" class="order-error" style="display: none; color: #e74c3c; font-size: 13px; margin-top: 5px;">
-                    \u{26A0}\u{FE0F} Informe uma quantidade válida!
-                </div>
+                <label for="quantity">\u{1F4CA} Quantidade total:</label>
+                <span id="totalQuantity">0</span> unidade(s)
             </div>
 
             <div class="order-observation">
                 <label for="observation">\u{1F4DD} Observações (opcional):</label>
-                <textarea id="observation" rows="2" placeholder="Ex: sem açúcar, entrega para..."></textarea>
+                <textarea id="observation" rows="2" placeholder="Ex: Entrega para..."></textarea>
+                <div id="observationFeedback" style="
+                    display: none;
+                    color: #e74c3c;
+                    font-size: 12px;
+                    margin-top: 5px;
+                    font-weight: 600;
+                ">
+                \u{26A0}\u{FE0F} Limite máximo de 200 caracteres atingido!
+                </div>
+                <div id="charCounter" style="
+                    margin-left: auto;
+                    font-size: 11px;
+                    color: #806c85;
+                ">
+                    0/200
+                </div>
             </div>
 
             <button id="sendOrderBtn" class="button btn-send-order" data-product="${productId}">
@@ -395,95 +315,227 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function closeModal() {
         const modal = document.getElementById('orderModal');
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
+        if (modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+
+            const body = document.getElementById('orderModalBody');
+            if (body) {
+                body.innerHTML = '';
+            }
+        }
     }
 
     function setupModalEvents(productId) {
-        const closeBtn = document.querySelector('.order-modal-close');
-        closeBtn.addEventListener('click', closeModal);
-
         const modal = document.getElementById('orderModal');
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeModal();
-        });
-
+        const closeBtn = document.querySelector('.order-modal-close');
         const sendBtn = document.getElementById('sendOrderBtn');
-        sendBtn.addEventListener('click', () => {
-            sendOrder(productId);
-        });
 
-        const quantityInput = document.getElementById('quantity');
-        quantityInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                sendOrder(productId);
-            }
-        });
+        closeBtn.onclick = closeModal;
 
-        quantityInput.addEventListener('input', () => {
-            document.getElementById('quantityError').style.display = 'none';
-        });
-
-        document.querySelectorAll('.flavor-checkbox').forEach(checkbox => {
-            checkbox.addEventListener('change', () => {
-                document.getElementById('flavorError').style.display = 'none';
-            });
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.style.display === 'flex') {
+        modal.onclick = (e) => {
+            if (e.target === modal) {
                 closeModal();
             }
+        };
+
+        sendBtn.onclick = (e) => {
+            e.preventDefault();
+            sendOrder(productId);
+        };
+
+        document.querySelectorAll('.flavor-plus').forEach(button => {
+            button.onclick = () => {
+                const flavor = button.dataset.flavor;
+                const increment = parseInt(button.dataset.increment);
+                const quantityElement =
+                    document.querySelector(`.flavor-quantity[data-flavor="${CSS.escape(flavor)}"]`);
+                let quantity =
+                    parseInt(quantityElement.dataset.quantity) || 0;
+
+                quantity += increment;
+                quantityElement.dataset.quantity = quantity;
+                quantityElement.textContent = quantity;
+                updateTotalQuantity();
+            };
+
         });
+
+        document.querySelectorAll('.flavor-minus').forEach(button => {
+            button.onclick = () => {
+                const flavor = button.dataset.flavor;
+                const increment = parseInt(button.dataset.increment);
+                const quantityElement =
+                    document.querySelector(`.flavor-quantity[data-flavor="${CSS.escape(flavor)}"]`);
+
+                let quantity =
+                    parseInt(quantityElement.dataset.quantity) || 0;
+
+                quantity -= increment;
+                if (quantity < 0) {
+                    quantity = 0;
+                }
+
+                quantityElement.dataset.quantity = quantity;
+                quantityElement.textContent = quantity;
+                updateTotalQuantity();
+            };
+        });
+
+        const observation = document.getElementById('observation');
+        const currentLength = observation.value.length;
+
+        if (observation) {
+            const feedbackElement = document.getElementById('observationFeedback');
+            const charCounter = document.getElementById('charCounter');
+            const maxLength = 200;
+
+            observation.oninput = () => {
+                const currentLength = observation.value.length;
+
+                if (charCounter) {
+                    charCounter.textContent = `${currentLength}/${maxLength}`;
+
+                    if (currentLength > 180) {
+                        charCounter.style.color = '#e74c3c';
+                        charCounter.style.fontWeight = 'bold';
+                    } else if (currentLength > 150) {
+                        charCounter.style.color = '#f39c12';
+                        charCounter.style.fontWeight = 'normal';
+                    } else {
+                        charCounter.style.color = '#806c85';
+                        charCounter.style.fontWeight = 'normal';
+                    }
+                }
+
+                if (currentLength > maxLength) {
+                    observation.value = observation.value.substring(0, maxLength);
+
+                    if (feedbackElement) {
+                        feedbackElement.style.display = 'block';
+
+                        feedbackElement.style.animation = 'none';
+                        feedbackElement.offsetHeight;
+                        feedbackElement.style.animation = 'shake 0.3s ease';
+                    }
+
+                    observation.style.borderColor = '#e74c3c';
+                    observation.style.boxShadow = '0 0 0 4px rgba(231, 76, 60, 0.1)';
+
+                    clearTimeout(observation.timeout);
+                    observation.timeout = setTimeout(() => {
+                        if (feedbackElement) {
+                            feedbackElement.style.display = 'none';
+                        }
+                        observation.style.borderColor = '';
+                        observation.style.boxShadow = '';
+                    }, 2000);
+
+                    if (charCounter) {
+                        charCounter.textContent = `${maxLength}/${maxLength}`;
+                    }
+                }
+            };
+        }
+    }
+
+    function updateTotalQuantity() {
+
+        let total = 0;
+
+        document.querySelectorAll('.flavor-quantity').forEach(element => {
+
+            const quantity =
+                parseInt(element.dataset.quantity) || 0;
+
+            total += quantity;
+        });
+
+        const totalElement =
+            document.getElementById('totalQuantity');
+
+        if (totalElement) {
+            totalElement.textContent = total;
+        }
+
+        return total;
     }
 
     function sendOrder(productId) {
-        const product = products[productId]; 
-        const checkboxes = document.querySelectorAll('.flavor-checkbox:checked');
-        const selectedFlavors = Array.from(checkboxes).map(cb => cb.value);
-        
-        const quantity = parseInt(document.getElementById('quantity').value) || 0;
-        const observation = document.getElementById('observation').value.trim();
+        const product = products[productId];
 
-        let hasError = false;
+        if (!product) return;
+        const flavorElements = document.querySelectorAll('.flavor-quantity');
+        const selectedFlavors = [];
+        let totalQuantity = 0;
 
-        if (selectedFlavors.length === 0) {
+        flavorElements.forEach(element => {
+            const flavor = element.dataset.flavor;
+            const quantity = parseInt(element.dataset.quantity) || 0;
+
+            if (quantity > 0) {
+                selectedFlavors.push({
+                    flavor: flavor,
+                    quantity: quantity
+                });
+                totalQuantity += quantity;
+            }
+        });
+
+        if (totalQuantity === 0) {
             document.getElementById('flavorError').style.display = 'block';
-            document.querySelector('.order-flavors').scrollIntoView({ behavior: 'smooth', block: 'center' });
-            hasError = true;
-        }
+            document
+                .querySelector('.order-flavors')
+                .scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            showAlert(
+                'warning',
+                'Ops!',
+                'Selecione pelo menos uma quantidade.'
+            );
 
-        if (quantity < 1) {
-            document.getElementById('quantityError').style.display = 'block';
-            document.getElementById('quantity').focus();
-            hasError = true;
-        }
-
-        if (hasError) {
-            showAlert('warning', 'Ops!', 'Por favor, corrija os campos destacados acima.');
             return;
         }
 
         let unitPrice = product.price;
-        if (product.wholesalePrice && quantity >= product.wholesaleMinQuantity) {
+
+        if (
+            product.wholesalePrice &&
+            totalQuantity >= product.wholesaleMinQuantity
+        ) {
             unitPrice = product.wholesalePrice;
         }
-        const total = unitPrice * quantity;
+
+        const total = unitPrice * totalQuantity;
 
         let message = `*FRUITSALLES - NOVO PEDIDO* %0A%0A`;
-        message += `*Produto:* ${product.name}%0A`;
-        message += `*Sabores:* ${selectedFlavors.join(', ')}%0A`;
-        message += `*Quantidade:* ${quantity} unidade(s)%0A`;
+        message += `*Produto:* ${product.name}%0A%0A`;
+        message += `*Sabores e quantidades:*%0A`;
+        selectedFlavors.forEach(item => {
+            message += `• ${item.flavor}: ${item.quantity} unidade(s)%0A`;
+        });
+        message += `%0A`;
+        message += `*Quantidade total:* ${totalQuantity} unidade(s)%0A`;
         message += `*Valor unitário:* R$ ${unitPrice.toFixed(2)}%0A`;
         message += `*Total:* R$ ${total.toFixed(2)}%0A%0A`;
 
+        const observationElement =
+            document.getElementById('observation');
+
+        const observation =
+            observationElement ? observationElement.value.trim() : '';
+
         if (observation) {
-            message += `*Observações:* ${observation}%0A%0A`;
+            message +=
+                `*Observações:* ${encodeURIComponent(observation)}%0A%0A`;
         }
 
         message += `Olá! Gostaria de confirmar meu pedido.`;
 
         const url = WHATSAPP_URL + message;
+
         window.open(url, '_blank');
         closeModal();
     }
@@ -504,7 +556,7 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         const buttons = document.querySelectorAll('.button-green, .button-pink, .button-purple, .button-yellow, .button-blue');
-        
+
         buttons.forEach(button => {
             if (button.textContent.includes('PEDIR AGORA') || button.textContent.includes('PEDIR')) {
                 const card = button.closest('.product-card, .flavors-card, .fruit-content, .contact-box');
@@ -528,7 +580,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     else if (button.closest('.fruit-content')) productId = 'gourmetIce';
                     else if (button.closest('.fruits')) productId = 'fruitPopsicle';
                     else if (button.closest('.crushed')) productId = 'specialMoreninha';
-                    else if (button.closest('.milk')) {
+                    else if (button.closest('.item')) {
                         const title = button.closest('.product-card')?.querySelector('h3');
                         if (title) {
                             const text = title.textContent;

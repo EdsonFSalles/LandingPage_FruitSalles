@@ -658,7 +658,7 @@ a {
     position: absolute;
     top: 25px;
     left: -5%;
-    width: 103%;
+    width: 110%;
     padding: 11px;
     background: var(--purple-700);
     color: white;
@@ -666,7 +666,7 @@ a {
     font-weight: 900;
     letter-spacing: 4px;
     text-align: center;
-    transform: rotate(-2deg);
+    transform: rotate(-1.5deg);
 }
 
 .section-title {
@@ -1055,7 +1055,7 @@ body.swal2-shown > .order-modal {
 
 .order-modal-content {
     background: linear-gradient(145deg, #fff8f1, #f8edf8);
-    border-radius: 30px;
+    border-radius: 23px 0px 8px;
     max-width: 540px;
     width: 100%;
     max-height: 90vh;
@@ -1104,6 +1104,183 @@ body.swal2-shown > .order-modal {
     margin-bottom: 10px;
     letter-spacing: -1px;
     padding-right: 30px;
+}
+
+.order-flavor-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+    background: #ffffff;
+    border: 1px solid #eeeeee;
+    border-radius: 12px;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+.order-flavor-item:hover {
+    border-color: #8e3fa3;
+    box-shadow: 0 3px 10px rgba(142, 63, 163, 0.10);
+}
+
+.flavor-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #333;
+    text-align: center;
+    min-height: 20px;
+}
+.flavor-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.flavor-minus,
+.flavor-plus {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 10px;
+
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        background-color 0.15s ease,
+        box-shadow 0.15s ease;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+.flavor-minus {
+    background: #f1f1f1;
+    color: #555;
+}
+
+.flavor-minus:hover {
+    background: #e5e5e5;
+}
+
+.btn-send-order {
+    width: 100%;
+
+    margin-top: 8px;
+    padding: 14px 18px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: #25D366;
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        background-color 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.btn-send-order:hover {
+    background: #20bd5a;
+
+    box-shadow:
+        0 5px 15px rgba(37, 211, 102, 0.25);
+}
+
+.btn-send-order:active {
+    transform: scale(0.98);
+}
+
+
+
+.flavor-plus {
+    background: #8e3fa3;
+    color: #ffffff;
+    box-shadow: 0 3px 8px rgba(142, 63, 163, 0.25);
+}
+
+.flavor-plus:hover {
+    background: #78358b;
+}
+
+.flavor-minus:active,
+.flavor-plus:active {
+    transform: scale(0.92);
+}
+
+.flavor-quantity {
+    min-width: 42px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 8px;
+
+    background: #fafafa;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+
+    color: #333;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    box-sizing: border-box;
+}
+
+.assorted-info {
+    display: block;
+
+    margin-top: 2px;
+
+    color: #8e3fa3;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    text-align: center;
+}
+
+.order-total {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    margin: 18px 0;
+    padding: 13px 16px;
+
+    background: linear-gradient(135deg,#f8effb, #fff);
+
+    border: 1px solid #e2c9e8;
+    border-radius: 12px;
+
+    color: #555;
+
+    font-size: 15px;
+}
+
+#totalQuantity {
+    color: #8e3fa3;
+    font-size: 19px;
+    font-weight: 800;
 }
 
 .order-price {
@@ -1166,20 +1343,7 @@ body.swal2-shown > .order-modal {
     border-color: rgba(142, 63, 163, 0.15);
 }
 
-.order-flavor-item input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    accent-color: var(--purple-500);
-    cursor: pointer;
-    flex-shrink: 0;
-}
 
-.order-flavor-item label {
-    color: var(--text);
-    font-size: 14px;
-    cursor: pointer;
-    flex: 1;
-}
 
 .order-quantity {
     margin-bottom: 18px;
@@ -1191,24 +1355,6 @@ body.swal2-shown > .order-modal {
     color: var(--purple-800);
     font-size: 15px;
     font-weight: 600;
-}
-
-.order-quantity input {
-    width: 100%;
-    padding: 12px 16px;
-    border: 2px solid rgba(142, 63, 163, 0.12);
-    border-radius: 12px;
-    font-size: 16px;
-    background: white;
-    transition: 0.3s ease;
-    color: var(--text);
-    box-sizing: border-box;
-}
-
-.order-quantity input:focus {
-    outline: none;
-    border-color: var(--purple-400);
-    box-shadow: 0 0 0 4px rgba(142, 63, 163, 0.08);
 }
 
 .order-observation {
@@ -1270,61 +1416,6 @@ body.swal2-shown > .order-modal {
 .btn-send-order:active {
     transform: translateY(0);
 }
-
-/* Responsive-ORDER */
-@media (max-width: 520px) {
-    .order-modal-content {
-        padding: 25px 18px 25px;
-        border-radius: 20px;
-        max-height: 95vh;
-    }
-
-    .order-modal-content h2 {
-        font-size: 20px;
-        padding-right: 25px;
-    }
-
-    .order-flavors-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 4px;
-    }
-
-    .order-flavor-item {
-        padding: 6px 10px;
-    }
-
-    .order-flavor-item label {
-        font-size: 13px;
-    }
-
-    .btn-send-order {
-        padding: 14px;
-        font-size: 14px;
-    }
-
-    .order-price p {
-        font-size: 13px;
-    }
-
-    .order-price strong {
-        font-size: 17px;
-    }
-}
-
-@media (max-width: 380px) {
-    .order-flavors-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .order-modal-content {
-        padding: 20px 14px 20px;
-    }
-
-    .order-modal-content h2 {
-        font-size: 18px;
-    }
-}
-
 
 /* ================================
             SWEET-ALERT
@@ -1543,46 +1634,6 @@ body.swal2-shown > .order-modal {
 .swal2-popup {
     z-index: 999999 !important;
 }
-
-
-@media (max-width: 520px) {
-    .fruitsalles-exit {
-        width: calc(100% - 28px);
-        padding: 30px 20px 25px !important;
-        border-radius: 25px !important;
-    }
-
-    .fruitsalles-exit-title {
-        font-size: 24px !important;
-    }
-
-    .exit-icon {
-        width: 70px;
-        height: 70px;
-        font-size: 32px;
-    }
-
-    .exit-main {
-        font-size: 16px;
-    }
-
-    .exit-text {
-        font-size: 13px;
-    }
-
-    .fruitsalles-exit .swal2-actions {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .fruitsalles-exit-button,
-    .fruitsalles-exit-cancel {
-        width: 100%;
-    }
-
-}
-
-
 
 /* ===========================
             RESPONSIVE
@@ -1803,6 +1854,115 @@ body.swal2-shown > .order-modal {
     }
 }
 
+@media (max-width: 520px) {
+    .fruitsalles-exit {
+        width: calc(100% - 28px);
+        padding: 30px 20px 25px !important;
+        border-radius: 25px !important;
+    }
+
+    .fruitsalles-exit-title {
+        font-size: 24px !important;
+    }
+
+    .exit-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 32px;
+    }
+
+    .exit-main {
+        font-size: 16px;
+    }
+
+    .exit-text {
+        font-size: 13px;
+    }
+
+    .fruitsalles-exit .swal2-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .fruitsalles-exit-button,
+    .fruitsalles-exit-cancel {
+        width: 100%;
+    }
+    .order-modal-content {
+        padding: 25px 18px 25px;
+        border-radius: 20px;
+        max-height: 95vh;
+    }
+
+    .order-modal-content h2 {
+        font-size: 20px;
+        padding-right: 25px;
+    }
+
+    .order-flavors-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 4px;
+    }
+
+    .order-flavor-item {
+        padding: 6px 10px;
+    }
+
+    .order-flavor-item label {
+        font-size: 13px;
+    }
+
+
+    .order-flavor-item {
+        padding: 10px;
+    }
+
+    .flavor-controls {
+        gap: 12px;
+    }
+
+    .flavor-minus,
+    .flavor-plus {
+        width: 42px;
+        height: 42px;
+
+        font-size: 23px;
+    }
+
+    .flavor-quantity {
+        min-width: 48px;
+        height: 42px;
+
+        font-size: 17px;
+    }
+
+    .flavor-name {
+        font-size: 14px;
+    }
+
+    .sortidos-info {
+        font-size: 11px;
+    }
+
+    .order-total {
+        margin: 14px 0;
+        padding: 12px;
+    }
+
+    .btn-send-order {
+        padding: 14px;
+        font-size: 14px;
+    }
+
+    .order-price p {
+        font-size: 13px;
+    }
+
+    .order-price strong {
+        font-size: 17px;
+    }
+
+}
 
 @media (max-width: 430px) {
 
@@ -1858,6 +2018,33 @@ body.swal2-shown > .order-modal {
     
     .flavorsImg{
         display: block;
+    }
+
+     .order-flavors-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .order-modal-content {
+        padding: 20px 14px 20px;
+    }
+
+    .order-modal-content h2 {
+        font-size: 18px;
+    }
+
+    .order-flavor-item {
+        padding: 9px;
+    }
+
+    .flavor-minus,
+    .flavor-plus {
+        width: 38px;
+        height: 38px;
+    }
+
+    .flavor-quantity {
+        min-width: 44px;
+        height: 38px;
     }
 
 }
