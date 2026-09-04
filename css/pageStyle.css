@@ -241,16 +241,21 @@ button, a { -webkit-tap-highlight-color: transparent; }
     display: flex;
     gap: 12px;
     margin-bottom: 28px;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.052);
+    border: 1px solid rgba(255, 255, 255, .1);
+     border-radius: var(--radius-small);
 }
 
-.benefit {
+.hero-benefits .benefit {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
     padding: 10px 14px;
-    background: rgba(255, 255, 255, .07);
-    border: 1px solid rgba(255, 255, 255, .1);
-    border-radius: var(--radius-small);
+    position: relative;
+    transition: all 0.3s ease;
 }
 
 .benefit .icon { font-size: 23px; }
@@ -667,8 +672,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
     content: "MASSAS • PICOLÉS • GELO GOURMET • PICOLÉS";
     position: absolute;
     top: 25px;
-    left: -5%;
-    width: 110%;
+    width: 100%;
     padding: 11px;
     background: var(--color-primary-700);
     color: var(--color-surface);
@@ -1870,7 +1874,7 @@ body.swal2-shown > .order-modal { display: none !important; }
     .fruit-content h2 { font-size: 42px; }
     .categories-grid { grid-template-columns: 1fr; }
     .categories::before {
-        width: 101%;
+        width: 100%;
         content: "MASSAS • GELO GOURMET • PICOLÉS";
     }
     .product-card--fruits, .product-card--item, .product-card--crushed { transform: none; }
@@ -1894,7 +1898,15 @@ body.swal2-shown > .order-modal { display: none !important; }
     }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 620px) {
+    .order-flavors-grid {
+        grid-template-columns: 1fr !important;
+        gap: 6px;
+    }
+    .hero-image::after{
+        display: none; 
+    }
+
     .fruitsalles-exit {
         width: calc(100% - 28px);
         padding: 30px 20px 25px !important;

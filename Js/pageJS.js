@@ -341,6 +341,28 @@ const HTMLGenerator = {
     }
 };
 
+//FORMAT NUMBER
+function formatNumberWithThousandSeparator(value){
+    const num = parseFloat(value);
+    if (isNaN(num)) return '0,00';
+    return num.toLocaleString('pt-BR', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+}
+
+function applyNumberFormatting() {
+    document.querySelectorAll('.format-number, .subtotal-value, .price strong, .cart-total strong:last-child, .order-price strong, .product-price strong').forEach(el => {
+        const rawValue = el.getAttribute('data-raw') || el.textContent;
+        const numValue = parseFloat(rawValue.replace(/[^0-9,]/g, '').replace(',', '.'));
+        if (!isNaN(numValue) && numValue !== 0) {
+            el.textContent = formatNumberWithThousandSeparator(numValue);
+        }
+    });
+}
+document.addEventListener('DOMContentLoaded', applyNumberFormatting);
+document.addEventListener('modalOpened', applyNumberFormatting);
+document.addEventListener('cartUpdated', applyNumberFormatting);
 // MODAL MANAGER
 const ModalManager = {
     // Create modal element
