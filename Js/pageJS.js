@@ -1,4 +1,4 @@
-// CONFIGURAÇÃO
+// CONFIGURATION
 
 const CONFIG = {
     WHATSAPP_NUMBER: "5567998595718",
@@ -30,7 +30,7 @@ const state = {
     detectExit: true
 };
 
-//ARRAY PRODUCT
+// PRODUCTS ARRAY
 const PRODUCTS = {
     flavoredIce: createProduct({
         name: "Gelos Saborizados",
@@ -101,18 +101,23 @@ const PRODUCTS = {
     })
 };
 
+// Factory function to create product objects
 function createProduct({ name, flavors, price, wholesalePrice = null, wholesaleMinQuantity = null, sortidosIncrement = null }) {
     return { name, flavors, price, wholesalePrice, wholesaleMinQuantity, sortidosIncrement };
 }
 
+// DOM MANIPULATION
 const DOM = {
+    // Get element by ID
     getElement: (id) => document.getElementById(id),
 
+    // Get modal elements
     getModalElements: () => ({
         modal: DOM.getElement('orderModal'),
         body: DOM.getElement('orderModalBody')
     }),
 
+    // Display modal
     showModal: () => {
         const { modal } = DOM.getModalElements();
         if (modal) {
@@ -121,6 +126,7 @@ const DOM = {
         }
     },
 
+    // Hide modal
     hideModal: () => {
         const { modal, body } = DOM.getModalElements();
         if (!modal) return;
@@ -131,7 +137,9 @@ const DOM = {
     }
 };
 
+// ALERT HELPER
 const AlertHelper = {
+    // Show alert using SweetAlert2 or fallback to native alert
     show: (icon, title, text) => {
         if (typeof Swal === 'undefined') {
             alert(`${title}\n\n${text}`);
@@ -150,7 +158,9 @@ const AlertHelper = {
     }
 };
 
+// PRICE CALCULATOR
 const PriceCalculator = {
+    // Calculate price for a single product
     calculate: (product, quantity) => {
         const hasPromo = product.wholesalePrice && quantity >= product.wholesaleMinQuantity;
         const unitPrice = hasPromo ? product.wholesalePrice : product.price;
@@ -164,6 +174,7 @@ const PriceCalculator = {
         };
     },
 
+    // Calculate cart totals
     calculateCartTotals: (cartItems) =>
         cartItems.reduce((acc, item) => ({
             grandTotal: acc.grandTotal + item.total,
@@ -172,7 +183,9 @@ const PriceCalculator = {
         }), { grandTotal: 0, totalItems: 0, totalSavings: 0 })
 };
 
+// HTML GENERATOR
 const HTMLGenerator = {
+    // Generate product price display
     productPrice: (product) => `
         <strong>R$ ${product.price.toFixed(2)}</strong> / unidade
         ${product.wholesalePrice ?
@@ -180,23 +193,38 @@ const HTMLGenerator = {
             : ''}
     `,
 
-    flavorControls: (flavor, increment, quantity = 0, prefix = '') => `
+    // Generate flavor quantity controls
+    flavorControls: (flavor, increment, quantity = 0, prefix = '') => {
+        const isSortidos = flavor.toLowerCase() === 'sortidos';
+        if (isSortidos) {
+            return `
+            <div class="order-flavor-item">
+                <div class="flavor-name">${flavor}</div>
+                <div class="flavor-controls">
+                    <button type="button" class="flavor-minus" data-flavor="${flavor}" data-increment="${increment}">−</button>
+                    <span class="flavor-quantity" id="${prefix}flavor_${flavor.replace(/\s+/g, '_')}" data-flavor="${flavor}" data-quantity="${quantity}">${quantity}</span>
+                    <button type="button" class="flavor-plus" data-flavor="${flavor}" data-increment="${increment}">+</button>
+                </div>
+                <small class="assorted-info">${EMOJIS.package} Pacote com ${increment} unidades</small>
+            </div>
+        `;
+        }
+        return `
         <div class="order-flavor-item">
             <div class="flavor-name">${flavor}</div>
             <div class="flavor-controls">
-                <button type="button" class="flavor-minus-five" data-flavor="${flavor}" data-increment="${increment * 5}">−5</button>
+                <button type="button" class="flavor-minus-five" data-flavor="${flavor}" data-increment="5">-5</button>
                 <button type="button" class="flavor-minus" data-flavor="${flavor}" data-increment="${increment}">−</button>
                 <span class="flavor-quantity" id="${prefix}flavor_${flavor.replace(/\s+/g, '_')}" 
                       data-flavor="${flavor}" data-quantity="${quantity}">${quantity}</span>
                 <button type="button" class="flavor-plus" data-flavor="${flavor}" data-increment="${increment}">+</button>
-                 <button type="button" class="flavor-plus-five" data-flavor="${flavor}" data-increment="${increment * 5}">+5</button>
+                <button type="button" class="flavor-plus-five" data-flavor="${flavor}" data-increment="5">+5</button>
             </div>
-            ${flavor.toLowerCase() === 'sortidos' ?
-            `<small class="assorted-info">${EMOJIS.package} Pacote com ${increment} unidades</small>`
-            : ''}
         </div>
-    `,
+    `;
+    },
 
+    // Generate observation textarea field
     observationField: (value = '') => `
         <div class="order-observation">
             <label for="observation">${EMOJIS.note} Observações (opcional):</label>
@@ -210,6 +238,7 @@ const HTMLGenerator = {
         </div>
     `,
 
+    // Generate cart item HTML
     cartItem: (item, index) => `
         <div class="cart-item">
             <div class="cart-item-header">
@@ -231,6 +260,7 @@ const HTMLGenerator = {
         </div>
     `,
 
+    // Generate price display with savings
     priceDisplay: (item) => {
         if (!item.hasPromo) return `<span>R$ ${item.total.toFixed(2)}</span>`;
 
@@ -238,11 +268,12 @@ const HTMLGenerator = {
             <span>
                 <span style="text-decoration: line-through; color: #7c0596;">R$ ${item.regularTotal.toFixed(2)}</span>
                 <span style="color: #55a86b; font-weight: bold;">R$ ${item.total.toFixed(2)}</span>
-                <small style="display: block; color: #55a86b;">Economia: R$ ${item.savings.toFixed(2)}</small>
+                <small style="display: block; color: #55a86b;">Você economizou: R$ ${item.savings.toFixed(2)}</small>
             </span>
         `;
     },
 
+    // Generate cart summary
     cartSummary: (totals, cartLength) => `
         <div class="cart-summary">
             <div><span>Total de itens:</span><strong>${totals.totalItems} unidade(s)</strong></div>
@@ -254,16 +285,65 @@ const HTMLGenerator = {
         </div>
     `,
 
+    // Generate cart action buttons
     cartActions: () => `
-        <div style="display: flex; gap: 10px; flex-direction: column;">
-            <button id="continueShoppingBtn" class="button btn-continue">${EMOJIS.cart} CONTINUAR PEDINDO</button>
-            <button id="finalizeOrderBtn" class="button btn-finalize">${EMOJIS.whatsapp} FINALIZAR PEDIDO</button>
+         <div style="display: flex; gap: 10px; flex-direction: column;">
+        <button id="continueShoppingBtn" class="button btn-continue">${EMOJIS.cart} CONTINUAR COMPRANDO</button>
+        <button id="finalizeOrderBtn" class="button btn-finalize">${EMOJIS.whatsapp} FINALIZAR PEDIDO</button>
+        <div style="display: flex; gap: 10px; margin-top: 10px;">
+            <button id="clearCartBtn" class="button btn-clear" style="flex: 1; background: #e74c3c; color: white; border: none; padding: 12px 20px; border-radius: 12px; font-weight: 600; cursor: pointer;">
+                ${EMOJIS.remove} ESVAZIAR CARRINHO
+            </button>
+            <button id="backToShopBtn" class="button btn-back" style="flex: 1; background: #3498db; color: white; border: none; padding: 12px 20px; border-radius: 12px; font-weight: 600; cursor: pointer;">
+                ${EMOJIS.cart} VOLTAR ÀS COMPRAS
+            </button>
         </div>
-    `
+    </div>
+    `,
+
+    // Generate dynamic price display for product modal
+    priceDisplayDynamic: (product) => `
+        <div class="order-price-dynamic">
+            <div class="price-info">
+                <span class="price-label">Preço unitário:</span>
+                <span class="price-unit">R$ ${product.price.toFixed(2)}</span>
+                ${product.wholesalePrice ?
+            `<span class="price-wholesale-label"> | Atacado (${product.wholesaleMinQuantity}+): R$ ${product.wholesalePrice.toFixed(2)}</span>`
+            : ''}
+            </div>
+            <div class="subtotal-display">
+                <span class="subtotal-label">Subtotal:</span>
+                <span class="subtotal-value" id="dynamicSubtotal">R$ 0,00</span>
+            </div>
+            ${product.wholesalePrice ?
+            `<div class="wholesale-indicator" id="wholesaleIndicator" style="display: none; color: #55a86b; font-size: 13px; font-weight: 600;">
+                    ${EMOJIS.package} Preço promocional aplicado!
+                </div>`
+            : ''}
+        </div>
+    `,
+
+    // Calculate cart totals from quantities
+    cartTotalizer: (product, quantities) => {
+        const totalQuantity = Object.values(quantities).reduce((sum, q) => sum + q, 0);
+        const hasPromo = product.wholesalePrice && totalQuantity >= product.wholesaleMinQuantity;
+        const unitPrice = hasPromo ? product.wholesalePrice : product.price;
+        const subtotal = unitPrice * totalQuantity;
+
+        return {
+            totalQuantity,
+            unitPrice,
+            hasPromo,
+            subtotal,
+            regularTotal: product.price * totalQuantity,
+            savings: hasPromo ? (product.price - product.wholesalePrice) * totalQuantity : 0
+        };
+    }
 };
 
-//MODEL SESSION
+// MODAL MANAGER
 const ModalManager = {
+    // Create modal element
     create: () => {
         document.body.insertAdjacentHTML('beforeend', `
             <div id="orderModal" class="order-modal" style="display: none;">
@@ -277,6 +357,7 @@ const ModalManager = {
         ModalManager.setupCloseEvents();
     },
 
+    // Setup modal close events
     setupCloseEvents: () => {
         const closeBtn = document.querySelector('.order-modal-close');
         const modal = DOM.getElement('orderModal');
@@ -298,6 +379,7 @@ const ModalManager = {
         });
     },
 
+    // Open product modal
     openProduct: (productId) => {
         const product = PRODUCTS[productId];
         if (!product) return;
@@ -310,6 +392,7 @@ const ModalManager = {
         EventManager.setupProductEvents();
     },
 
+    // Generate product modal HTML
     generateProductHTML: (product) => {
         const { name, flavors, price, wholesalePrice, wholesaleMinQuantity } = product;
         const hasMultipleFlavors = flavors.length > 1;
@@ -329,6 +412,7 @@ const ModalManager = {
                 <label>${EMOJIS.chart} Quantidade total:</label>
                 <span id="totalQuantity">0</span> unidade(s)
             </div>
+            ${HTMLGenerator.priceDisplayDynamic(product)}
             ${HTMLGenerator.observationField()}
             <div style="display: flex; gap: 10px; margin-top: 20px;">
                 <button id="addToCartBtn" class="button btn-add-cart" style="flex: 1;">
@@ -341,6 +425,7 @@ const ModalManager = {
         `;
     },
 
+    // Generate flavors grid
     generateFlavorsGrid: (product) => `
         <div class="order-flavors">
             <label><strong>Selecione os sabores:</strong></label>
@@ -355,6 +440,7 @@ const ModalManager = {
         </div>
     `,
 
+    // Generate single flavor controls
     generateSingleFlavor: (product) => `
         <div class="order-flavors">
             <label><strong>Quantidade:</strong></label>
@@ -367,6 +453,7 @@ const ModalManager = {
         </div>
     `,
 
+    // Generate quantity input for products without flavors
     generateQuantityInput: () => `
         <div class="order-quantity">
             <label for="quantityInput">${EMOJIS.chart} Quantidade:</label>
@@ -374,12 +461,14 @@ const ModalManager = {
         </div>
     `,
 
+    // Get increment value for flavor
     getIncrement: (product, flavor) =>
         flavor.toLowerCase() === 'sortidos' ? product.sortidosIncrement || 1 : 1
 };
 
-//CART
+// CART MANAGER
 const CartManager = {
+    // Update header badge with cart count
     updateHeaderBadge: () => {
         const cartCount = document.getElementById('cartCount');
         const headerLink = document.querySelector('.viewCartBtnHeader');
@@ -398,6 +487,8 @@ const CartManager = {
             }
         }
     },
+
+    // Add item to cart
     addItem: () => {
         const product = PRODUCTS[state.currentProductId];
         if (!product) return;
@@ -427,6 +518,7 @@ const CartManager = {
         CartManager.showAddedAlert(product, totalQuantity, priceInfo);
     },
 
+    // Get selected flavors from UI
     getSelectedFlavors: (product) => {
         const flavorElements = document.querySelectorAll('.flavor-quantity');
 
@@ -445,12 +537,14 @@ const CartManager = {
         }];
     },
 
+    // Show flavor selection error
     showFlavorError: () => {
         const errorElement = DOM.getElement('flavorError');
         if (errorElement) errorElement.style.display = 'block';
         AlertHelper.show('warning', 'Ops!', 'Selecione pelo menos uma quantidade.');
     },
 
+    // Show success alert after adding to cart
     showAddedAlert: (product, quantity, priceInfo) => {
         Swal.fire({
             icon: 'success',
@@ -477,17 +571,52 @@ const CartManager = {
             if (result.isConfirmed) CartManager.view();
         });
     },
+
+    // Clear all items from cart
+    clearCart: () => {
+        if (!state.cart.length) {
+            AlertHelper.show('info', 'Carrinho vazio', 'Não há itens para remover.');
+            return;
+        }
+
+        Swal.fire({
+            title: 'Esvaziar carrinho?',
+            html: `
+            <p>Tem certeza que deseja remover <strong>TODOS</strong> os itens do carrinho?</p>
+            <p style="color: #e74c3c; font-weight: bold;">Esta ação não pode ser desfeita!</p>
+        `,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: `${EMOJIS.remove} SIM, ESVAZIAR`,
+            cancelButtonText: `${EMOJIS.cancel} CANCELAR`,
+            confirmButtonColor: '#e74c3c',
+            cancelButtonColor: '#806c85',
+            reverseButtons: true
+        }).then((result) => {
+            if (!result.isConfirmed) return;
+
+            state.cart = [];
+            CartManager.updateHeaderBadge();
+            DOM.hideModal();
+            AlertHelper.show('success', 'Carrinho esvaziado!', 'Todos os itens foram removidos.');
+        });
+    },
+
+    // Close modal and return to shop
+    backToShop: () => {
+        DOM.hideModal();
+    },
+
+    // Generate edit HTML for cart item
     generateEditHTML: (product, item, index) => {
         const hasMultipleFlavors = product.flavors.length > 1;
         const hasSingleFlavor = product.flavors.length === 1;
 
-        // Criar mapa de quantidades por sabor
         const flavorMap = {};
         item.flavors.forEach(f => {
             flavorMap[f.flavor] = f.quantity;
         });
 
-        // Gerar controles com as quantidades atuais
         const flavorsHTML = hasMultipleFlavors || hasSingleFlavor
             ? `<div class="order-flavors">
             <label><strong>${hasMultipleFlavors ? 'Selecione os sabores:' : 'Quantidade:'}</strong></label>
@@ -527,6 +656,7 @@ const CartManager = {
     `;
     },
 
+    // View cart
     view: () => {
         if (!state.cart.length) {
             AlertHelper.show('info', 'Carrinho vazio', 'Adicione produtos ao carrinho primeiro.');
@@ -547,6 +677,7 @@ const CartManager = {
         EventManager.setupCartEvents();
     },
 
+    // Remove item from cart
     removeItem: (index) => {
         const item = state.cart[index];
         if (!item) return;
@@ -571,20 +702,20 @@ const CartManager = {
             CartManager.updateHeaderBadge();
             state.cart.length ? CartManager.view() : DOM.hideModal();
         });
-
     },
+
+    // Finalize order and open WhatsApp
     finalize: () => {
         if (!state.cart.length) return;
-
         const message = CartManager.generateWhatsAppMessage();
         window.open(WHATSAPP_URL + message, '_blank');
 
-        state.cart = [];
-        CartManager.updateHeaderBadge();
-        DOM.hideModal();
         AlertHelper.show('success', 'Pedido enviado!', 'Seu pedido completo foi aberto no WhatsApp.');
+
+        CartManager.updateHeaderBadge();
     },
 
+    // Edit cart item
     editItem: (index) => {
         const item = state.cart[index];
         if (!item) return;
@@ -599,6 +730,8 @@ const CartManager = {
         DOM.showModal();
         EventManager.setupEditEvents(product, index);
     },
+
+    // Update cart item
     updateItem: (product, index) => {
         const selectedFlavors = CartManager.getSelectedFlavors(product);
 
@@ -623,6 +756,8 @@ const CartManager = {
         AlertHelper.show('success', 'Atualizado!', 'Item do carrinho atualizado com sucesso.');
         CartManager.view();
     },
+
+    // Update flavor quantity
     updateFlavorQuantity: (flavor, increment) => {
         const element = document.querySelector(`.flavor-quantity[data-flavor="${CSS.escape(flavor)}"]`);
         if (!element) return;
@@ -635,6 +770,7 @@ const CartManager = {
         CartManager.updateTotalQuantity();
     },
 
+    // Update total quantity display
     updateTotalQuantity: () => {
         const total = Array.from(document.querySelectorAll('.flavor-quantity'))
             .reduce((sum, el) => sum + (parseInt(el.dataset.quantity) || 0), 0);
@@ -645,6 +781,7 @@ const CartManager = {
         return total;
     },
 
+    // Generate WhatsApp message
     generateWhatsAppMessage: () => {
         const totals = PriceCalculator.calculateCartTotals(state.cart);
         let message = `*FRUITSALLES - PEDIDO COMPLETO* %0A%0A`;
@@ -672,7 +809,87 @@ const CartManager = {
     }
 };
 
+// PRICE UPDATER
+const PriceUpdater = {
+    // Update dynamic price display in real-time
+    updateDynamicPrice: (product) => {
+        const flavorElements = document.querySelectorAll('.flavor-quantity');
+        const quantities = {};
+        let totalQuantity = 0;
+
+        flavorElements.forEach(el => {
+            const qty = parseInt(el.dataset.quantity) || 0;
+            quantities[el.dataset.flavor] = qty;
+            totalQuantity += qty;
+        });
+
+        if (flavorElements.length === 0) {
+            const quantityInput = DOM.getElement('quantityInput');
+            if (quantityInput) {
+                totalQuantity = parseInt(quantityInput.value) || 0;
+            }
+        }
+
+        const hasPromo = product.wholesalePrice && totalQuantity >= product.wholesaleMinQuantity;
+        const unitPrice = hasPromo ? product.wholesalePrice : product.price;
+        const subtotal = unitPrice * totalQuantity;
+        const regularTotal = product.price * totalQuantity;
+        const savings = hasPromo ? (product.price - product.wholesalePrice) * totalQuantity : 0;
+
+        const subtotalElement = document.getElementById('dynamicSubtotal');
+        const wholesaleIndicator = document.getElementById('wholesaleIndicator');
+        const totalQuantityElement = document.getElementById('totalQuantity');
+
+        if (subtotalElement) {
+            subtotalElement.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+
+            if (hasPromo && totalQuantity > 0) {
+                subtotalElement.style.color = '#55a86b';
+                subtotalElement.style.fontWeight = 'bold';
+            } else {
+                subtotalElement.style.color = '#8e3fa3';
+                subtotalElement.style.fontWeight = 'bold';
+            }
+        }
+
+        if (wholesaleIndicator) {
+            if (hasPromo && totalQuantity > 0) {
+                wholesaleIndicator.style.display = 'block';
+                wholesaleIndicator.innerHTML = `${EMOJIS.package} Preço promocional aplicado! Você economizou: R$ ${savings.toFixed(2)}`;
+            } else {
+                wholesaleIndicator.style.display = 'none';
+            }
+        }
+
+        if (totalQuantityElement) {
+            totalQuantityElement.textContent = totalQuantity;
+        }
+
+        return { totalQuantity, unitPrice, hasPromo, subtotal, savings };
+    },
+
+    // Setup price update event listeners
+    setupPriceUpdates: (product) => {
+        document.querySelectorAll('.flavor-plus, .flavor-minus, .flavor-plus-five, .flavor-minus-five').forEach(btn => {
+            btn.addEventListener('click', () => {
+                setTimeout(() => {
+                    PriceUpdater.updateDynamicPrice(product);
+                }, 5);
+            });
+        });
+
+        const quantityInput = DOM.getElement('quantityInput');
+        if (quantityInput) {
+            quantityInput.addEventListener('input', () => {
+                PriceUpdater.updateDynamicPrice(product);
+            });
+        }
+    }
+};
+
+// EXIT ALERT
 const ExitAlert = {
+    // Setup exit alert when user tries to leave the page
     setup: () => {
         const whatsappURL = `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=Olá!%20Gostaria%20de%20estar%20realizando%20um%20pedido`;
 
@@ -723,6 +940,7 @@ const ExitAlert = {
     }
 };
 
+// ORDER BUTTON
 const OrderButton = {
     PRODUCT_MAPPING: {
         'Gelos Saborizados': 'flavoredIce',
@@ -738,6 +956,7 @@ const OrderButton = {
         'Comestível Triturado 5kg': 'crushedIce5kg'
     },
 
+    // Setup order buttons
     setup: () => {
         document.querySelectorAll('.button--green, .button--pink, .button--purple, .button--yellow, .button--blue')
             .forEach(button => {
@@ -750,6 +969,7 @@ const OrderButton = {
             });
     },
 
+    // Identify product from button
     identifyProduct: (button) => {
         const card = button.closest('.product-card, .flavors-card, .fruit-content');
         if (!card) return null;
@@ -761,6 +981,7 @@ const OrderButton = {
         return OrderButton.PRODUCT_MAPPING[productName] || OrderButton.fallbackIdentify(button);
     },
 
+    // Fallback product identification
     fallbackIdentify: (button) => {
         const card = button.closest('.product-card, .flavors-card, .fruit-content');
         if (!card) return null;
@@ -787,6 +1008,7 @@ const OrderButton = {
         return null;
     },
 
+    // Configure button to open product modal
     configureButton: (button, productId) => {
         button.removeAttribute('href');
         button.style.cursor = 'pointer';
@@ -798,18 +1020,31 @@ const OrderButton = {
     }
 };
 
+// EVENT MANAGER
 const EventManager = {
+    // Setup product modal events
     setupProductEvents: () => {
         EventManager.setupFlavorButtons();
         EventManager.setupObservationValidation();
+
+        const product = PRODUCTS[state.currentProductId];
+        if (product) {
+            setTimeout(() => {
+                PriceUpdater.updateDynamicPrice(product);
+            }, 100);
+            PriceUpdater.setupPriceUpdates(product);
+        }
 
         DOM.getElement('addToCartBtn')?.addEventListener('click', CartManager.addItem);
         DOM.getElement('viewCartBtn')?.addEventListener('click', CartManager.view);
     },
 
+    // Setup cart modal events
     setupCartEvents: () => {
         DOM.getElement('continueShoppingBtn')?.addEventListener('click', DOM.hideModal);
         DOM.getElement('finalizeOrderBtn')?.addEventListener('click', CartManager.finalize);
+        DOM.getElement('clearCartBtn')?.addEventListener('click', CartManager.clearCart);
+        DOM.getElement('backToShopBtn')?.addEventListener('click', CartManager.backToShop);
 
         document.querySelectorAll('.cart-edit-btn').forEach(btn =>
             btn.addEventListener('click', () => CartManager.editItem(parseInt(btn.dataset.index)))
@@ -820,24 +1055,26 @@ const EventManager = {
         );
     },
 
+    // Setup flavor button events
     setupFlavorButtons: () => {
         document.querySelectorAll('.flavor-plus-five').forEach(btn => {
             btn.addEventListener('click', () => CartManager.updateFlavorQuantity(btn.dataset.flavor, parseInt(btn.dataset.increment)));
-        });//for * +5
+        });
 
         document.querySelectorAll('.flavor-plus').forEach(btn => {
             btn.addEventListener('click', () => CartManager.updateFlavorQuantity(btn.dataset.flavor, parseInt(btn.dataset.increment)));
-        });//for + un
+        });
 
         document.querySelectorAll('.flavor-minus').forEach(btn => {
             btn.addEventListener('click', () => CartManager.updateFlavorQuantity(btn.dataset.flavor, -parseInt(btn.dataset.increment)));
-        });//for - un
+        });
 
         document.querySelectorAll('.flavor-minus-five').forEach(btn => {
             btn.addEventListener('click', () => CartManager.updateFlavorQuantity(btn.dataset.flavor, -parseInt(btn.dataset.increment)));
         });
     },
 
+    // Setup observation field validation
     setupObservationValidation: () => {
         const observation = DOM.getElement('observation');
         if (!observation) return;
@@ -861,6 +1098,7 @@ const EventManager = {
         });
     },
 
+    // Show observation feedback when limit is exceeded
     showObservationFeedback: (observation, feedback, counter) => {
         if (feedback) {
             feedback.style.display = 'block';
@@ -879,6 +1117,8 @@ const EventManager = {
 
         if (counter) counter.textContent = `${CONFIG.MAX_OBSERVATION_LENGTH}/${CONFIG.MAX_OBSERVATION_LENGTH}`;
     },
+
+    // Setup edit mode events
     setupEditEvents: (product, index) => {
         document.querySelectorAll('.flavor-plus-five').forEach(btn => {
             btn.addEventListener('click', () => CartManager.updateFlavorQuantity(btn.dataset.flavor, parseInt(btn.dataset.increment)));
@@ -898,7 +1138,7 @@ const EventManager = {
     }
 };
 
-
+// INITIALIZATION
 document.addEventListener("DOMContentLoaded", () => {
     ExitAlert.setup();
     ModalManager.create();
