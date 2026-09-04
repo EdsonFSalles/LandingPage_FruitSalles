@@ -306,9 +306,9 @@ const HTMLGenerator = {
         <div class="order-price-dynamic">
             <div class="price-info">
                 <span class="price-label">Preço unitário:</span>
-                <span class="price-unit">R$ ${product.price.toFixed(2)}</span>
+                <span class="price-unit">R$ ${formatNumberWithThousandSeparator(product.price)}</span>
                 ${product.wholesalePrice ?
-            `<span class="price-wholesale-label"> | Atacado (${product.wholesaleMinQuantity}+): R$ ${product.wholesalePrice.toFixed(2)}</span>`
+            `<span class="price-wholesale-label"> | Atacado (${product.wholesaleMinQuantity}+): R$ ${formatNumberWithThousandSeparator(product.wholesalePrice)}</span>`
             : ''}
             </div>
             <div class="subtotal-display">
@@ -342,7 +342,7 @@ const HTMLGenerator = {
 };
 
 //FORMAT NUMBER
-function formatNumberWithThousandSeparator(value){
+function formatNumberWithThousandSeparator(value) {
     const num = parseFloat(value);
     if (isNaN(num)) return '0,00';
     return num.toLocaleString('pt-BR', {
@@ -350,19 +350,6 @@ function formatNumberWithThousandSeparator(value){
         maximumFractionDigits: 2
     });
 }
-
-function applyNumberFormatting() {
-    document.querySelectorAll('.format-number, .subtotal-value, .price strong, .cart-total strong:last-child, .order-price strong, .product-price strong').forEach(el => {
-        const rawValue = el.getAttribute('data-raw') || el.textContent;
-        const numValue = parseFloat(rawValue.replace(/[^0-9,]/g, '').replace(',', '.'));
-        if (!isNaN(numValue) && numValue !== 0) {
-            el.textContent = formatNumberWithThousandSeparator(numValue);
-        }
-    });
-}
-document.addEventListener('DOMContentLoaded', applyNumberFormatting);
-document.addEventListener('modalOpened', applyNumberFormatting);
-document.addEventListener('cartUpdated', applyNumberFormatting);
 // MODAL MANAGER
 const ModalManager = {
     // Create modal element
@@ -814,14 +801,14 @@ const CartManager = {
             item.flavors.forEach(f => message += `• ${f.flavor}: ${f.quantity} unidade(s)%0A`);
             message += `*Quantidade total:* ${item.totalQuantity} unidade(s)%0A`;
             message += `*${item.hasPromo ? 'Preço promocional' : 'Valor unitário'}:* R$ ${item.unitPrice.toFixed(2)}/un%0A`;
-            message += `*Subtotal:* R$ ${item.total.toFixed(2)}%0A`;
+            message += `*Subtotal:* R$ ${formatNumberWithThousandSeparator(item.total)}%0A`;
 
             if (item.observation) message += `*Observações:* ${item.observation}%0A`;
             message += `%0A`;
         });
 
         message += `*RESUMO DO PEDIDO*%0A`;
-        message += `*Total de itens:* ${totals.totalItems} unidade(s)%0A`;
+        message += `*Total de itens:* ${formatNumberWithThousandSeparator(totals.grandTotal)} unidade(s)%0A`;
         message += `*Total de produtos:* ${state.cart.length} produto(s)%0A`;
         if (totals.totalSavings > 0) message += `*Economia total:* R$ ${totals.totalSavings.toFixed(2)}%0A`;
         message += `*VALOR TOTAL: R$ ${totals.grandTotal.toFixed(2)}*%0A%0A`;
@@ -863,7 +850,7 @@ const PriceUpdater = {
         const totalQuantityElement = document.getElementById('totalQuantity');
 
         if (subtotalElement) {
-            subtotalElement.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+            subtotalElement.textContent = `R$ ${formatNumberWithThousandSeparator(subtotal)}`;
 
             if (hasPromo && totalQuantity > 0) {
                 subtotalElement.style.color = '#55a86b';
