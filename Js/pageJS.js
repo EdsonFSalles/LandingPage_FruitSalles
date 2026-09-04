@@ -380,6 +380,24 @@ const ModalManager = {
 
 //CART
 const CartManager = {
+    updateHeaderBadge: () => {
+        const cartCount = document.getElementById('cartCount');
+        const headerLink = document.querySelector('.viewCartBtnHeader');
+
+        if (cartCount) {
+            cartCount.textContent = state.cart.length;
+        }
+
+        if (headerLink) {
+            if (state.cart.length === 0) {
+                headerLink.style.display = 'none';
+            } else {
+                headerLink.style.display = 'inline-flex';
+                headerLink.style.alignItems = 'center';
+                headerLink.style.gap = '8px';
+            }
+        }
+    },
     addItem: () => {
         const product = PRODUCTS[state.currentProductId];
         if (!product) return;
@@ -405,6 +423,7 @@ const CartManager = {
         });
 
         DOM.hideModal();
+        CartManager.updateHeaderBadge();
         CartManager.showAddedAlert(product, totalQuantity, priceInfo);
     },
 
@@ -458,13 +477,62 @@ const CartManager = {
             if (result.isConfirmed) CartManager.view();
         });
     },
+    generateEditHTML: (product, item, index) => {
+        const hasMultipleFlavors = product.flavors.length > 1;
+        const hasSingleFlavor = product.flavors.length === 1;
+
+        // Criar mapa de quantidades por sabor
+        const flavorMap = {};
+        item.flavors.forEach(f => {
+            flavorMap[f.flavor] = f.quantity;
+        });
+
+        // Gerar controles com as quantidades atuais
+        const flavorsHTML = hasMultipleFlavors || hasSingleFlavor
+            ? `<div class="order-flavors">
+            <label><strong>${hasMultipleFlavors ? 'Selecione os sabores:' : 'Quantidade:'}</strong></label>
+            <div class="order-flavors-grid">
+                ${product.flavors.map(flavor =>
+                HTMLGenerator.flavorControls(
+                    flavor,
+                    ModalManager.getIncrement(product, flavor),
+                    flavorMap[flavor] || 0,
+                    'edit_'
+                )
+            ).join('')}
+            </div>
+            <div id="flavorError" class="order-error" style="display: none;">
+                ${EMOJIS.warning} Selecione pelo menos uma quantidade!
+            </div>
+        </div>`
+            : HTMLGenerator.quantityInput(item.totalQuantity);
+
+        return `
+        <h2>${EMOJIS.edit} EDITAR: ${product.name}</h2>
+        <div class="order-price"><p>${HTMLGenerator.productPrice(product)}</p></div>
+        ${flavorsHTML}
+        <div class="order-quantity">
+            <label>${EMOJIS.chart} Quantidade total:</label>
+            <span id="totalQuantity">${item.totalQuantity}</span> unidade(s)
+        </div>
+        ${HTMLGenerator.observationField(item.observation)}
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <button id="updateCartBtn" class="button btn-update" style="flex: 1;">
+                ${EMOJIS.edit} ATUALIZAR CARRINHO
+            </button>
+            <button id="cancelEditBtn" class="button btn-cancel" style="flex: 1;">
+                ${EMOJIS.cancel} CANCELAR
+            </button>
+        </div>
+    `;
+    },
 
     view: () => {
         if (!state.cart.length) {
             AlertHelper.show('info', 'Carrinho vazio', 'Adicione produtos ao carrinho primeiro.');
             return;
         }
-
+        CartManager.updateHeaderBadge();
         const { body } = DOM.getModalElements();
         const totals = PriceCalculator.calculateCartTotals(state.cart);
 
@@ -500,6 +568,7 @@ const CartManager = {
             if (!result.isConfirmed) return;
 
             state.cart.splice(index, 1);
+            CartManager.updateHeaderBadge();
             state.cart.length ? CartManager.view() : DOM.hideModal();
         });
 
@@ -511,6 +580,7 @@ const CartManager = {
         window.open(WHATSAPP_URL + message, '_blank');
 
         state.cart = [];
+        CartManager.updateHeaderBadge();
         DOM.hideModal();
         AlertHelper.show('success', 'Pedido enviado!', 'Seu pedido completo foi aberto no WhatsApp.');
     },
@@ -750,73 +820,95 @@ const EventManager = {
         );
     },
 
-        setupFlavorButtons: () => {
-            document.querySelectorAll('.flavor-plus-five').forEach(btn => {
-                btn.addEventListener('click', () => CartManager.updateFlavorQuantity(btn.dataset.flavor, parseInt(btn.dataset.increment)));});//for * +5
-                
-            document.querySelectorAll('.flavor-plus').forEach(btn => {
-                btn.addEventListener('click', () => CartManager.updateFlavorQuantity(btn.dataset.flavor, parseInt(btn.dataset.increment)));});//for + un
-            
-            document.querySelectorAll('.flavor-minus').forEach(btn => {
-                btn.addEventListener('click', () => CartManager.updateFlavorQuantity(btn.dataset.flavor, -parseInt(btn.dataset.increment)));});//for - un
-          
-            document.querySelectorAll('.flavor-minus-five').forEach(btn => {
-                btn.addEventListener('click', () => CartManager.updateFlavorQuantity(btn.dataset.flavor, -parseInt(btn.dataset.increment)));});
-        },
+    setupFlavorButtons: () => {
+        document.querySelectorAll('.flavor-plus-five').forEach(btn => {
+            btn.addEventListener('click', () => CartManager.updateFlavorQuantity(btn.dataset.flavor, parseInt(btn.dataset.increment)));
+        });//for * +5
 
-            setupObservationValidation: () => {
-                const observation = DOM.getElement('observation');
-                if (!observation) return;
+        document.querySelectorAll('.flavor-plus').forEach(btn => {
+            btn.addEventListener('click', () => CartManager.updateFlavorQuantity(btn.dataset.flavor, parseInt(btn.dataset.increment)));
+        });//for + un
 
-                const feedback = DOM.getElement('observationFeedback');
-                const counter = DOM.getElement('charCounter');
+        document.querySelectorAll('.flavor-minus').forEach(btn => {
+            btn.addEventListener('click', () => CartManager.updateFlavorQuantity(btn.dataset.flavor, -parseInt(btn.dataset.increment)));
+        });//for - un
 
-                observation.addEventListener('input', () => {
-                    const length = observation.value.length;
+        document.querySelectorAll('.flavor-minus-five').forEach(btn => {
+            btn.addEventListener('click', () => CartManager.updateFlavorQuantity(btn.dataset.flavor, -parseInt(btn.dataset.increment)));
+        });
+    },
 
-                    if (counter) {
-                        counter.textContent = `${length}/${CONFIG.MAX_OBSERVATION_LENGTH}`;
-                        counter.style.color = length > 180 ? '#e74c3c' : length > 150 ? '#f39c12' : '#806c85';
-                        counter.style.fontWeight = length > 180 ? 'bold' : 'normal';
-                    }
+    setupObservationValidation: () => {
+        const observation = DOM.getElement('observation');
+        if (!observation) return;
 
-                    if (length > CONFIG.MAX_OBSERVATION_LENGTH) {
-                        observation.value = observation.value.substring(0, CONFIG.MAX_OBSERVATION_LENGTH);
-                        EventManager.showObservationFeedback(observation, feedback, counter);
-                    }
-                });
-            },
+        const feedback = DOM.getElement('observationFeedback');
+        const counter = DOM.getElement('charCounter');
 
-            showObservationFeedback: (observation, feedback, counter) => {
-                if (feedback) {
-                    feedback.style.display = 'block';
-                    feedback.style.animation = 'shake 0.3s ease';
-                }
+        observation.addEventListener('input', () => {
+            const length = observation.value.length;
 
-                observation.style.borderColor = '#e74c3c';
-                observation.style.boxShadow = '0 0 0 4px rgba(231, 76, 60, 0.1)';
-
-                clearTimeout(observation.timeout);
-                observation.timeout = setTimeout(() => {
-                    if (feedback) feedback.style.display = 'none';
-                    observation.style.borderColor = '';
-                    observation.style.boxShadow = '';
-                }, CONFIG.ANIMATION_DURATION);
-
-                if (counter) counter.textContent = `${CONFIG.MAX_OBSERVATION_LENGTH}/${CONFIG.MAX_OBSERVATION_LENGTH}`;
-            },
-            setupEditEvents: (product, index) => {
-                EventManager.setupFlavorButtons();
-                EventManager.setupObservationValidation();
-
-                DOM.getElement('cancelEditBtn')?.addEventListener('click', CartManager.view);
-                DOM.getElement('updateCartBtn')?.addEventListener('click', () => CartManager.updateItem(product, index));
+            if (counter) {
+                counter.textContent = `${length}/${CONFIG.MAX_OBSERVATION_LENGTH}`;
+                counter.style.color = length > 180 ? '#e74c3c' : length > 150 ? '#f39c12' : '#806c85';
+                counter.style.fontWeight = length > 180 ? 'bold' : 'normal';
             }
+
+            if (length > CONFIG.MAX_OBSERVATION_LENGTH) {
+                observation.value = observation.value.substring(0, CONFIG.MAX_OBSERVATION_LENGTH);
+                EventManager.showObservationFeedback(observation, feedback, counter);
+            }
+        });
+    },
+
+    showObservationFeedback: (observation, feedback, counter) => {
+        if (feedback) {
+            feedback.style.display = 'block';
+            feedback.style.animation = 'shake 0.3s ease';
+        }
+
+        observation.style.borderColor = '#e74c3c';
+        observation.style.boxShadow = '0 0 0 4px rgba(231, 76, 60, 0.1)';
+
+        clearTimeout(observation.timeout);
+        observation.timeout = setTimeout(() => {
+            if (feedback) feedback.style.display = 'none';
+            observation.style.borderColor = '';
+            observation.style.boxShadow = '';
+        }, CONFIG.ANIMATION_DURATION);
+
+        if (counter) counter.textContent = `${CONFIG.MAX_OBSERVATION_LENGTH}/${CONFIG.MAX_OBSERVATION_LENGTH}`;
+    },
+    setupEditEvents: (product, index) => {
+        document.querySelectorAll('.flavor-plus-five').forEach(btn => {
+            btn.addEventListener('click', () => CartManager.updateFlavorQuantity(btn.dataset.flavor, parseInt(btn.dataset.increment)));
+        });
+        document.querySelectorAll('.flavor-plus').forEach(btn => {
+            btn.addEventListener('click', () => CartManager.updateFlavorQuantity(btn.dataset.flavor, parseInt(btn.dataset.increment)));
+        });
+        document.querySelectorAll('.flavor-minus').forEach(btn => {
+            btn.addEventListener('click', () => CartManager.updateFlavorQuantity(btn.dataset.flavor, -parseInt(btn.dataset.increment)));
+        });
+        document.querySelectorAll('.flavor-minus-five').forEach(btn => {
+            btn.addEventListener('click', () => CartManager.updateFlavorQuantity(btn.dataset.flavor, -parseInt(btn.dataset.increment)));
+        });
+        EventManager.setupObservationValidation();
+        document.getElementById('cancelEditBtn')?.addEventListener('click', CartManager.view);
+        document.getElementById('updateCartBtn')?.addEventListener('click', () => CartManager.updateItem(product, index));
+    }
 };
 
-    document.addEventListener("DOMContentLoaded", () => {
-        ExitAlert.setup();
-        ModalManager.create();
-        OrderButton.setup();
-        console.log('\u{1F366} FruitSalles Order System initialized!');
-    });
+
+document.addEventListener("DOMContentLoaded", () => {
+    ExitAlert.setup();
+    ModalManager.create();
+    OrderButton.setup();
+    const headerCartLink = document.querySelector('.viewCartBtnHeader');
+    if (headerCartLink) {
+        headerCartLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            CartManager.view();
+        });
+    }
+    CartManager.updateHeaderBadge();
+});
