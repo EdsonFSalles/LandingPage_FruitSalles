@@ -1971,6 +1971,17 @@ body.swal2-shown > .order-modal { display: none !important; }
     .cart-item-actions { flex-direction: column; }
     .cart-summary { padding: 15px; }
     .cart-total { font-size: 16px; }
+    
+    .hero-benefits{
+        margin: 10px 15px;
+        background: transparent;
+        border: none;
+    }
+    .benefit{
+        background: rgba(94, 5, 94, 0.23);
+        border: 1px solid rgba(255, 255, 255, .1);
+        border-radius: var(--radius-small);
+    }
 }
 
 @media (max-width: 430px) {
@@ -2004,16 +2015,5 @@ body.swal2-shown > .order-modal { display: none !important; }
     .flavor-quantity {
         min-width: 44px;
         height: 38px;
-    }
-
-    .hero-benefits{
-        margin: 10px 15px;
-        background: transparent;
-        border: none;
-    }
-    .benefit{
-        background: rgba(94, 5, 94, 0.23);
-        border: 1px solid rgba(255, 255, 255, .1);
-        border-radius: var(--radius-small);
     }
 }
