@@ -241,34 +241,34 @@ const HTMLGenerator = {
     // Generate cart item HTML
     cartItem: (item, index) => `
         <div class="cart-item">
-            <div class="cart-item-header">
-                <strong>${item.productName}</strong>
-                <span>R$ ${item.total.toFixed(2)}</span>
-            </div>
-            <div class="cart-item-flavors">
-                ${item.flavors.map(f => `• ${f.flavor}: ${f.quantity} un`).join('<br>')}
-            </div>
-            <div class="cart-item-details">
-                <span>Quantidade: ${item.totalQuantity} un</span>
-                ${HTMLGenerator.priceDisplay(item)}
-            </div>
-            ${item.observation ? `<div class="cart-item-observation">Obs: ${item.observation}</div>` : ''}
-            <div class="cart-item-actions">
-                <button class="cart-edit-btn" data-index="${index}">${EMOJIS.edit} EDITAR</button>
-                <button class="cart-remove-btn" data-index="${index}">${EMOJIS.remove} REMOVER</button>
-            </div>
+        <div class="cart-item-header">
+            <strong>${item.productName}</strong>
+            <span>R$ ${formatNumberWithThousandSeparator(item.total)}</span>
         </div>
-    `,
+        <div class="cart-item-flavors">
+            ${item.flavors.map(f => `• ${f.flavor}: ${f.quantity} un`).join('<br>')}
+        </div>
+        <div class="cart-item-details">
+            <span>Quantidade: ${item.totalQuantity} un</span>
+            ${HTMLGenerator.priceDisplay(item)}
+        </div>
+        ${item.observation ? `<div class="cart-item-observation">Obs: ${item.observation}</div>` : ''}
+        <div class="cart-item-actions">
+            <button class="cart-edit-btn" data-index="${index}">${EMOJIS.edit} EDITAR</button>
+            <button class="cart-remove-btn" data-index="${index}">${EMOJIS.remove} REMOVER</button>
+        </div>
+    </div>
+`,
 
     // Generate price display with savings
     priceDisplay: (item) => {
-        if (!item.hasPromo) return `<span>R$ ${item.total.toFixed(2)}</span>`;
+        if (!item.hasPromo) return `<span>R$ ${formatNumberWithThousandSeparator(item.total)}</span>`;
 
         return `
             <span>
-                <span style="text-decoration: line-through; color: #7c0596;">R$ ${item.regularTotal.toFixed(2)}</span>
-                <span style="color: #55a86b; font-weight: bold;">R$ ${item.total.toFixed(2)}</span>
-                <small style="display: block; color: #55a86b;">Você economizou: R$ ${item.savings.toFixed(2)}</small>
+                <span style="text-decoration: line-through; color: #7c0596;">R$ ${formatNumberWithThousandSeparator(item.regularTotal)}</span>
+                <span style="color: #031f0b; font-weight: bold;">R$ ${formatNumberWithThousandSeparator(item.total)}</span>
+                <small style="display: block; color: #031f0b;">Você economizou: R$ ${formatNumberWithThousandSeparator(item.savings)}</small>
             </span>
         `;
     },
@@ -276,12 +276,12 @@ const HTMLGenerator = {
     // Generate cart summary
     cartSummary: (totals, cartLength) => `
         <div class="cart-summary">
-            <div><span>Total de itens:</span><strong>${totals.totalItems} unidade(s)</strong></div>
+           <div><span>Total de itens:</span><strong>${totals.totalItems} unidade(s)</strong></div>
             <div><span>Total de produtos:</span><strong>${cartLength} produto(s)</strong></div>
             ${totals.totalSavings > 0 ?
-            `<div><span style="color: #55a86b;">Economia total:</span><strong style="color: #55a86b;">- R$ ${totals.totalSavings.toFixed(2)}</strong></div>`
+            `<div><span style="color: #55a86b;">Economia total:</span><strong style="color: #55a86b;">- R$ ${formatNumberWithThousandSeparator(totals.totalSavings)}</strong></div>`
             : ''}
-            <div class="cart-total"><strong>VALOR TOTAL:</strong><strong>R$ ${totals.grandTotal.toFixed(2)}</strong></div>
+            <div class="cart-total"><strong>VALOR TOTAL:</strong><strong>R$ ${formatNumberWithThousandSeparator(totals.grandTotal)}</strong></div>
         </div>
     `,
 
@@ -528,8 +528,9 @@ const CartManager = {
     },
 
     // Get selected flavors from UI
-    getSelectedFlavors: (product) => {
-        const flavorElements = document.querySelectorAll('.flavor-quantity');
+    getSelectedFlavors: (product, isEdit = false) => {
+        const prefix = isEdit ? 'edit_' : '';
+        const flavorElements = document.querySelectorAll(`.flavor-quantity[id^="${prefix}flavor_"]`);
 
         if (flavorElements.length > 0) {
             return Array.from(flavorElements)
@@ -562,8 +563,8 @@ const CartManager = {
                 <div style="margin: 15px 0;">
                     <p style="font-size: 16px; font-weight: bold; color: #321044;">${product.name}</p>
                     <p style="font-size: 14px; color: #555;">Quantidade: ${quantity} unidade(s)</p>
-                    <p style="font-size: 14px; color: #555;">Subtotal: <strong style="color: #8e3fa3;">R$ ${priceInfo.total.toFixed(2)}</strong></p>
-                    ${priceInfo.hasPromo ? '<p style="font-size: 12px; color: #55a86b;">✓ Preço promocional aplicado!</p>' : ''}
+                    <p style="font-size: 14px; color: #555;">Subtotal: <strong style="color: #8e3fa3;">R$  ${formatNumberWithThousandSeparator(priceInfo.total)}</strong></p>
+                    ${priceInfo.hasPromo ? '<p style="font-size: 12px; color: #031f0b;">✓ Preço promocional aplicado!</p>' : ''}
                     <p style="font-size: 13px; color: #806c85; margin-top: 10px;">${EMOJIS.cart} Total no carrinho: ${state.cart.length} produto(s)</p>
                 </div>
             `,
@@ -645,6 +646,8 @@ const CartManager = {
         </div>`
             : HTMLGenerator.quantityInput(item.totalQuantity);
 
+        const priceDisplay = HTMLGenerator.priceDisplayDynamic(product);
+
         return `
         <h2>${EMOJIS.edit} EDITAR: ${product.name}</h2>
         <div class="order-price"><p>${HTMLGenerator.productPrice(product)}</p></div>
@@ -653,6 +656,7 @@ const CartManager = {
             <label>${EMOJIS.chart} Quantidade total:</label>
             <span id="totalQuantity">${item.totalQuantity}</span> unidade(s)
         </div>
+        ${priceDisplay} 
         ${HTMLGenerator.observationField(item.observation)}
         <div style="display: flex; gap: 10px; margin-top: 20px;">
             <button id="updateCartBtn" class="button btn-update" style="flex: 1;">
@@ -695,7 +699,7 @@ const CartManager = {
             title: 'Remover item?',
             html: `
                 <p>Deseja remover <strong>${item.productName}</strong> do carrinho?</p>
-                <p>Quantidade: ${item.totalQuantity} unidade(s)<br>Subtotal: R$ ${item.total.toFixed(2)}</p>
+                <p>Quantidade: ${item.totalQuantity} unidade(s)<br>Subtotal: R$ ${formatNumberWithThousandSeparator(item.total)}</p>
             `,
             icon: 'warning',
             showCancelButton: true,
@@ -742,7 +746,7 @@ const CartManager = {
 
     // Update cart item
     updateItem: (product, index) => {
-        const selectedFlavors = CartManager.getSelectedFlavors(product);
+        const selectedFlavors = CartManager.getSelectedFlavors(product, true);
 
         if (!selectedFlavors.length) {
             CartManager.showFlavorError();
@@ -752,9 +756,10 @@ const CartManager = {
         const totalQuantity = selectedFlavors.reduce((sum, f) => sum + f.quantity, 0);
         const priceInfo = PriceCalculator.calculate(product, totalQuantity);
         const observation = DOM.getElement('observation')?.value.trim() || '';
+        const productId = state.cart[index].productId;
 
         state.cart[index] = {
-            productId: state.currentProductId,
+            productId: productId,
             productName: product.name,
             flavors: selectedFlavors,
             totalQuantity,
@@ -768,15 +773,17 @@ const CartManager = {
 
     // Update flavor quantity
     updateFlavorQuantity: (flavor, increment) => {
-        const element = document.querySelector(`.flavor-quantity[data-flavor="${CSS.escape(flavor)}"]`);
+        const element = document.querySelector(
+            `.flavor-quantity[data-flavor="${CSS.escape(flavor)}"]`
+        );
         if (!element) return;
 
         const current = parseInt(element.dataset.quantity) || 0;
         const newQuantity = Math.max(0, current + increment);
-
         element.dataset.quantity = newQuantity;
         element.textContent = newQuantity;
         CartManager.updateTotalQuantity();
+        return newQuantity;
     },
 
     // Update total quantity display
@@ -800,7 +807,7 @@ const CartManager = {
             message += `*Sabores e quantidades:*%0A`;
             item.flavors.forEach(f => message += `• ${f.flavor}: ${f.quantity} unidade(s)%0A`);
             message += `*Quantidade total:* ${item.totalQuantity} unidade(s)%0A`;
-            message += `*${item.hasPromo ? 'Preço promocional' : 'Valor unitário'}:* R$ ${item.unitPrice.toFixed(2)}/un%0A`;
+            message += `*${item.hasPromo ? 'Preço promocional' : 'Valor unitário'}:* R$${formatNumberWithThousandSeparator(item.unitPrice)}/un%0A`;
             message += `*Subtotal:* R$ ${formatNumberWithThousandSeparator(item.total)}%0A`;
 
             if (item.observation) message += `*Observações:* ${item.observation}%0A`;
@@ -811,7 +818,7 @@ const CartManager = {
         message += `*Total de itens:* ${formatNumberWithThousandSeparator(totals.grandTotal)} unidade(s)%0A`;
         message += `*Total de produtos:* ${state.cart.length} produto(s)%0A`;
         if (totals.totalSavings > 0) message += `*Economia total:* R$ ${totals.totalSavings.toFixed(2)}%0A`;
-        message += `*VALOR TOTAL: R$ ${totals.grandTotal.toFixed(2)}*%0A%0A`;
+        message += `*VALOR TOTAL: R$ ${formatNumberWithThousandSeparator(totals.grandTotal)}*%0A%0A`;
         message += `Olá! Gostaria de confirmar meu pedido.`;
 
         return message;
@@ -823,12 +830,10 @@ const PriceUpdater = {
     // Update dynamic price display in real-time
     updateDynamicPrice: (product) => {
         const flavorElements = document.querySelectorAll('.flavor-quantity');
-        const quantities = {};
         let totalQuantity = 0;
 
         flavorElements.forEach(el => {
             const qty = parseInt(el.dataset.quantity) || 0;
-            quantities[el.dataset.flavor] = qty;
             totalQuantity += qty;
         });
 
@@ -842,7 +847,6 @@ const PriceUpdater = {
         const hasPromo = product.wholesalePrice && totalQuantity >= product.wholesaleMinQuantity;
         const unitPrice = hasPromo ? product.wholesalePrice : product.price;
         const subtotal = unitPrice * totalQuantity;
-        const regularTotal = product.price * totalQuantity;
         const savings = hasPromo ? (product.price - product.wholesalePrice) * totalQuantity : 0;
 
         const subtotalElement = document.getElementById('dynamicSubtotal');
@@ -853,7 +857,7 @@ const PriceUpdater = {
             subtotalElement.textContent = `R$ ${formatNumberWithThousandSeparator(subtotal)}`;
 
             if (hasPromo && totalQuantity > 0) {
-                subtotalElement.style.color = '#55a86b';
+                subtotalElement.style.color = '#031f0b';
                 subtotalElement.style.fontWeight = 'bold';
             } else {
                 subtotalElement.style.color = '#8e3fa3';
@@ -864,7 +868,7 @@ const PriceUpdater = {
         if (wholesaleIndicator) {
             if (hasPromo && totalQuantity > 0) {
                 wholesaleIndicator.style.display = 'block';
-                wholesaleIndicator.innerHTML = `${EMOJIS.package} Preço promocional aplicado! Você economizou: R$ ${savings.toFixed(2)}`;
+                wholesaleIndicator.innerHTML = `${EMOJIS.package} Preço promocional aplicado! Você economizou: R$ ${formatNumberWithThousandSeparator(savings)}`;
             } else {
                 wholesaleIndicator.style.display = 'none';
             }
@@ -876,14 +880,13 @@ const PriceUpdater = {
 
         return { totalQuantity, unitPrice, hasPromo, subtotal, savings };
     },
-
     // Setup price update event listeners
     setupPriceUpdates: (product) => {
         document.querySelectorAll('.flavor-plus, .flavor-minus, .flavor-plus-five, .flavor-minus-five').forEach(btn => {
             btn.addEventListener('click', () => {
                 setTimeout(() => {
                     PriceUpdater.updateDynamicPrice(product);
-                }, 5);
+                }, 0);
             });
         });
 
@@ -893,6 +896,7 @@ const PriceUpdater = {
                 PriceUpdater.updateDynamicPrice(product);
             });
         }
+        PriceUpdater.updateDynamicPrice(product);
     }
 };
 
@@ -1130,21 +1134,62 @@ const EventManager = {
     // Setup edit mode events
     setupEditEvents: (product, index) => {
         document.querySelectorAll('.flavor-plus-five').forEach(btn => {
-            btn.addEventListener('click', () => CartManager.updateFlavorQuantity(btn.dataset.flavor, parseInt(btn.dataset.increment)));
+            btn.addEventListener('click', () => {
+                CartManager.updateFlavorQuantity(
+                    btn.dataset.flavor,
+                    parseInt(btn.dataset.increment)
+                );
+                PriceUpdater.updateDynamicPrice(product);
+            });
         });
+
         document.querySelectorAll('.flavor-plus').forEach(btn => {
-            btn.addEventListener('click', () => CartManager.updateFlavorQuantity(btn.dataset.flavor, parseInt(btn.dataset.increment)));
+            btn.addEventListener('click', () => {
+                CartManager.updateFlavorQuantity(
+                    btn.dataset.flavor,
+                    parseInt(btn.dataset.increment)
+                );
+                PriceUpdater.updateDynamicPrice(product);
+            });
         });
-        document.querySelectorAll('.flavor-minus').forEach(btn => {
-            btn.addEventListener('click', () => CartManager.updateFlavorQuantity(btn.dataset.flavor, -parseInt(btn.dataset.increment)));
-        });
+
         document.querySelectorAll('.flavor-minus-five').forEach(btn => {
-            btn.addEventListener('click', () => CartManager.updateFlavorQuantity(btn.dataset.flavor, -parseInt(btn.dataset.increment)));
+            btn.addEventListener('click', () => {
+                CartManager.updateFlavorQuantity(
+                    btn.dataset.flavor,
+                    -parseInt(btn.dataset.increment)
+                );
+                PriceUpdater.updateDynamicPrice(product);
+            });
         });
+
+        document.querySelectorAll('.flavor-minus').forEach(btn => {
+            btn.addEventListener('click', () => {
+                CartManager.updateFlavorQuantity(
+                    btn.dataset.flavor,
+                    -parseInt(btn.dataset.increment)
+                );
+                PriceUpdater.updateDynamicPrice(product);
+            });
+        });
+        const quantityInput = DOM.getElement('quantityInput');
+
+        if (quantityInput) {
+            quantityInput.addEventListener('input', () => {
+                PriceUpdater.updateDynamicPrice(product);
+            });
+        }
         EventManager.setupObservationValidation();
-        document.getElementById('cancelEditBtn')?.addEventListener('click', CartManager.view);
-        document.getElementById('updateCartBtn')?.addEventListener('click', () => CartManager.updateItem(product, index));
-    }
+        document.getElementById('cancelEditBtn')?.addEventListener(
+            'click',
+            CartManager.view
+        );
+        document.getElementById('updateCartBtn')?.addEventListener(
+            'click',
+            () => CartManager.updateItem(product, index)
+        );
+        PriceUpdater.updateDynamicPrice(product);
+    },
 };
 
 // INITIALIZATION

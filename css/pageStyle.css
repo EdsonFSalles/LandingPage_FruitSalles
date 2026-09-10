@@ -20,7 +20,7 @@
     --color-text-muted: #806c85;
     --color-accent-pink: #e85ca5;
     --color-accent-pink-light: #ff9bcb;
-    --color-accent-green: #55a86b;
+    --color-accent-green: #031f0b;
     --color-accent-yellow: #f3c95b;
     --color-accent-blue: #62a9e8;
     --color-lavender: #ead8ed;
@@ -246,7 +246,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
     justify-content: center;
     background: rgba(255, 255, 255, 0.052);
     border: 1px solid rgba(255, 255, 255, .1);
-     border-radius: var(--radius-small);
+    border-radius: var(--radius-small);
 }
 
 .hero-benefits .benefit {
@@ -2004,5 +2004,16 @@ body.swal2-shown > .order-modal { display: none !important; }
     .flavor-quantity {
         min-width: 44px;
         height: 38px;
+    }
+
+    .hero-benefits{
+        margin: 10px 15px;
+        background: transparent;
+        border: none;
+    }
+    .benefit{
+        background: rgba(94, 5, 94, 0.23);
+        border: 1px solid rgba(255, 255, 255, .1);
+        border-radius: var(--radius-small);
     }
 }
