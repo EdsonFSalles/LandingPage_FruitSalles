@@ -59,6 +59,47 @@ body {
     width: 100%;
 }
 
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    will-change: opacity, transform;
+}
+
+.reveal.reveal--visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
+.reveal--left {
+    transform: translateX(-40px);
+}
+.reveal--left.reveal--visible {
+    transform: translateX(0);
+}
+
+.reveal--right {
+    transform: translateX(40px);
+}
+.reveal--right.reveal--visible {
+    transform: translateX(0);
+}
+
+.reveal--zoom {
+    transform: scale(0.92);
+}
+.reveal--zoom.reveal--visible {
+    transform: scale(1);
+}
+
 img {
     max-width: 100%;
     display: block;
