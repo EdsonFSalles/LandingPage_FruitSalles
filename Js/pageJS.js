@@ -491,7 +491,6 @@ const CartManager = {
                 headerLink.style.display = 'none';
             } else {
                 headerLink.style.display = 'inline-flex';
-                headerLink.style.alignItems = 'center';
                 headerLink.style.gap = '8px';
             }
         }
@@ -1111,7 +1110,6 @@ const EventManager = {
         });
     },
 
-    // Show observation feedback when limit is exceeded
     showObservationFeedback: (observation, feedback, counter) => {
         if (feedback) {
             feedback.style.display = 'block';
@@ -1192,7 +1190,6 @@ const EventManager = {
     },
 };
 
-// INITIALIZATION
 document.addEventListener("DOMContentLoaded", () => {
     ExitAlert.setup();
     ModalManager.create();
@@ -1205,4 +1202,152 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
     CartManager.updateHeaderBadge();
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const carousel = document.querySelector('.categories-carousel');
+    if (!carousel) return;
+
+    const grid = carousel.querySelector('#categoriesGrid');
+    const viewport = carousel.querySelector('.carousel-viewport');
+    const slides = carousel.querySelectorAll('.category-slide');
+    const prevBtn = carousel.querySelector('.carousel-btn--prev');
+    const nextBtn = carousel.querySelector('.carousel-btn--next');
+
+    if (!grid || !viewport || !prevBtn || !nextBtn || slides.length === 0) {
+        console.warn('Carrossel: elementos não encontrados.');
+        return;
+    }
+
+    let currentIndex = 0;
+    const totalSlides = slides.length;
+
+    (function initMassasPagination() {
+        const massasSlide = document.querySelector('.category-slide--massas');
+        if (!massasSlide) return;
+
+        const pages = massasSlide.querySelectorAll('.massas-page');
+        const dots = massasSlide.querySelectorAll('.massas-dot');
+        if (pages.length === 0) return;
+
+        let massasPage = 0;
+        const isMobile = () => window.matchMedia('(max-width: 700px)').matches;
+
+        function showMassasPage(index) {
+            massasPage = Math.max(0, Math.min(index, pages.length - 1));
+
+            pages.forEach((page, i) => {
+                page.classList.toggle('massas-page--active', i === massasPage);
+            });
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('massas-dot--active', i === massasPage);
+            });
+
+            if (typeof updateCarousel === 'function') updateCarousel();
+        }
+
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => showMassasPage(i));
+        });
+
+        let touchStartX = 0;
+        let touchStartY = 0;
+
+        massasSlide.addEventListener('touchstart', (e) => {
+            if (!isMobile()) return;
+            e.stopPropagation();  
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        }, { passive: true });
+
+        massasSlide.addEventListener('touchend', (e) => {
+            if (!isMobile()) return;
+            e.stopPropagation();  
+
+            const diffX = touchStartX - e.changedTouches[0].screenX;
+            const diffY = touchStartY - e.changedTouches[0].screenY;
+
+            if (Math.abs(diffX) < Math.abs(diffY)) return;
+            if (Math.abs(diffX) < 50) return;
+
+            if (diffX > 0) showMassasPage(massasPage + 1);
+            else showMassasPage(massasPage - 1);
+        }, { passive: true });
+
+        window.addEventListener('resize', () => {
+            if (!isMobile()) {
+                pages.forEach(page => page.classList.remove('massas-page--active'));
+                dots.forEach(dot => dot.classList.remove('massas-dot--active'));
+            } else {
+                showMassasPage(massasPage);
+            }
+        });
+
+        showMassasPage(0);
+    })();
+
+    function updateCarousel() {
+        const offset = -currentIndex * 100;
+        grid.style.transform = `translateX(${offset}%)`;
+        const activeSlide = slides[currentIndex];
+        if (activeSlide && viewport) {
+            requestAnimationFrame(() => {
+                viewport.style.height = activeSlide.offsetHeight + 'px';
+            });
+        }
+    }
+
+    function goToNext() {
+        currentIndex = (currentIndex + 1) % totalSlides;
+        updateCarousel();
+    }
+
+    function goToPrev() {
+        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+        updateCarousel();
+    }
+
+    nextBtn.addEventListener('click', goToNext);
+    prevBtn.addEventListener('click', goToPrev);
+
+    document.addEventListener('keydown', function (e) {
+        const tag = document.activeElement?.tagName;
+        if (tag === 'INPUT' || tag === 'TEXTAREA' || document.activeElement?.isContentEditable) return;
+
+        const rect = carousel.getBoundingClientRect();
+        const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+        if (!isVisible) return;
+
+        if (e.key === 'ArrowRight') goToNext();
+        if (e.key === 'ArrowLeft') goToPrev();
+    });
+
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchEndX = 0;
+    let touchEndY = 0;
+
+    grid.addEventListener('touchstart', function (e) {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+
+    grid.addEventListener('touchend', function (e) {
+        touchEndX = e.changedTouches[0].screenX;
+        touchEndY = e.changedTouches[0].screenY;
+
+        const diffX = touchStartX - touchEndX;
+        const diffY = touchStartY - touchEndY;
+
+        if (Math.abs(diffX) < Math.abs(diffY)) return;
+
+        const swipeThreshold = 50;
+        if (Math.abs(diffX) < swipeThreshold) return;
+
+        if (diffX > 0) goToNext();
+        else goToPrev();
+    }, { passive: true });
+
+    updateCarousel();
+    console.log(`Carrossel inicializado com ${totalSlides} slides.`);
 });

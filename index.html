@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,8 +22,9 @@
                 </div>
             </a>
             <nav class="social-menu">
-                <a href="#" class="viewCartBtnHeader">&#x1F6D2; Ver Pedido (<span id="cartCount">0</span>)</a>
-                <a href="https://www.instagram.com/fruitsalles/" target="_blank"><span><i class="fa-brands fa-instagram"></i></span>Instagram</a>
+                <a href="#" class="viewCartBtnHeader">&#x1F6D2; Pedidos<span id="cartCount">0</span></a>
+                <a href="https://www.instagram.com/fruitsalles/" target="_blank"><span><i
+                            class="fa-brands fa-instagram"></i></span>Instagram</a>
                 <a href="https://wa.me/5567998933945?text=Olá!%20Gostaria%20de%20estar%20realizando%20um%20pedido."
                     target="_blank"><span><i class="fa-brands fa-whatsapp"></i></span>WhatsApp</a>
             </nav>
@@ -74,8 +76,8 @@
                 <div class="flavors-card">
                     <h2>Gelos Saborizados</h2>
                     <div class="flavorsDivImg">
-                        <img class="flavors-card-image-wrapper" src="images/gelos_saborizados.png"
-                            alt="Imagem ilustrativa sobre embalagens originais"></img>
+                        <img class="flavors-card-image" src="images/gelos_saborizados.png"
+                            alt="Imagem ilustrativa sobre embalagens originais">
                     </div>
                     <div class="price-box">
                         <div class="price">
@@ -165,182 +167,208 @@
             <div class="container">
                 <h2 class="section-title">Picolés e Massas para todos os gostos</h2>
 
-                <div class="categories-grid">
-                    <article class="product-card product-card--fruits">
-                        <div class="product-title">
-                            <span>&#x1F347;</span>
-                            <h3>Picolés de Frutas</h3>
-                        </div>
+                <div class="categories-carousel">
 
-                        <img src="images/image_picoléFruta_Ilustracao.png" alt="Imagem ilustrativa gerada por IA">
+                    <button class="carousel-btn carousel-btn--prev" aria-label="Slide anterior">
+                        &#10094;
+                    </button>
 
-                        <div class="product-price">
-                            <div>
-                                <strong>R$ 2,00</strong>
-                                <small>unidade</small>
+                    <div class="carousel-viewport">
+                        <div class="categories-grid" id="categoriesGrid">
+
+                            <div class="category-slide">
+                                <h3 class="category-slide-title">Picolés</h3>
+                                <article class="product-card product-card--fruits">
+                                    <div class="product-title">
+                                        <span>&#x1F347;</span>
+                                        <h3>Picolés de Frutas</h3>
+                                    </div>
+                                    <img src="images/image_picoléFruta_Ilustracao.png"
+                                        alt="Imagem ilustrativa gerada por IA">
+                                    <div class="product-price">
+                                        <div>
+                                            <strong>R$ 2,00</strong>
+                                            <small>unidade</small>
+                                        </div>
+                                        <div>
+                                            <strong>R$ 1,35</strong>
+                                            <small>acima de 15 unidades</small>
+                                        </div>
+                                    </div>
+                                    <a href="https://wa.me/5567998933945?text=Olá!%20Gostaria%20de%20estar%20realizando%20um%20pedido."
+                                        target="_blank" class="button button--purple">&#x1F49C; PEDIR AGORA</a>
+                                </article>
+
+                                <article class="product-card product-card--item">
+                                    <div class="product-title">
+                                        <span>&#x1F42E;</span>
+                                        <h3>Picolés de Leite</h3>
+                                    </div>
+                                    <img src="images/image_picoleLeite_Ilustracao.png"
+                                        alt="Imagem ilustrativa gerada por IA">
+                                    <div class="product-price">
+                                        <div>
+                                            <strong>R$ 3,00</strong>
+                                            <small>unidade</small>
+                                        </div>
+                                        <div>
+                                            <strong>R$ 2,00</strong>
+                                            <small>acima de 10 unidades</small>
+                                        </div>
+                                    </div>
+                                    <a href="https://wa.me/5567998933945?text=Olá!%20Gostaria%20de%20estar%20realizando%20um%20pedido."
+                                        target="_blank" class="button button--yellow">&#x1F49C; PEDIR AGORA</a>
+                                </article>
                             </div>
-                            <div>
-                                <strong>R$ 1,35</strong>
-                                <small>acima de 15 unidades</small>
+
+                            <div class="category-slide category-slide--massas">
+                                <h3 class="category-slide-title"> Massas</h3>
+
+                                <div class="massas-pages">
+                                    <div class="massas-page massas-page--active" data-page="0">
+                                        <article class="product-card product-card--crushed">
+                                            <div class="product-title">
+                                                <span>&#x1F366;</span>
+                                                <h3>Especial Moreninha</h3>
+                                            </div>
+                                            <img src="images/moreninha_Ilustracao.png"
+                                                alt="Imagem ilustrativa gerada por IA">
+                                            <div class="product-price product-price--single">
+                                                <div>
+                                                    <strong>R$ 8,00</strong>
+                                                    <small>unidade</small>
+                                                </div>
+                                            </div>
+                                            <a href="https://wa.me/5567998933945?text=Olá!%20Gostaria%20de%20estar%20realizando%20um%20pedido."
+                                                target="_blank" class="button button--blue">&#x1F49C; PEDIR AGORA</a>
+                                        </article>
+
+                                        <article class="product-card product-card--item">
+                                            <div class="product-title">
+                                                <span>&#X1F368;</span>
+                                                <h3>Copo de massas 300ml</h3>
+                                            </div>
+                                            <img src="images/massa_copo_Ilustração.png"
+                                                alt="Ilustração massa de sorvete de chocolate para copo de 300ml">
+                                            <div class="product-price product-price--single">
+                                                <div>
+                                                    <strong>R$ 10,00</strong>
+                                                    <small>unidade</small>
+                                                </div>
+                                            </div>
+                                            <a href="https://wa.me/5567998933945?text=Olá!%20Gostaria%20de%20estar%20realizando%20um%20pedido."
+                                                target="_blank" class="button button--purple">&#x1F49C; PEDIR AGORA</a>
+                                        </article>
+
+                                        
+                                    </div>
+                                    <div class="massas-page" data-page="1">
+                                        <article class="product-card product-card--item">
+                                            <div class="product-title">
+                                                <span>&#X1F368;</span>
+                                                <h3>Pote de massa - 1.5kg</h3>
+                                            </div>
+                                            <img src="images/image_representacao_pote1.5kg.png"
+                                                alt="ilustracao massa de sorvete de morango para balde de 1.5kg">
+                                            <div class="product-price product-price--single">
+                                                <div>
+                                                    <strong>R$ 22,00</strong>
+                                                    <small>unidade</small>
+                                                </div>
+                                            </div>
+                                            <a href="https://wa.me/5567998933945?text=Olá!%20Gostaria%20de%20estar%20realizando%20um%20pedido."
+                                                target="_blank" class="button button--purple">&#x1F49C; PEDIR AGORA</a>
+                                        </article>
+                                        <article class="product-card product-card--item">
+                                            <div class="product-title">
+                                                <span>&#X1F368;</span>
+                                                <h3>Pode de massa - 5kg</h3>
+                                            </div>
+                                            <img src="images/image_representacao_pote5kg.png"
+                                                alt="Ilustração massa de sorvete napolitano para balde de 5kg">
+                                            <div class="product-price product-price--single">
+                                                <div>
+                                                    <strong>R$ 80,00</strong>
+                                                    <small>unidade</small>
+                                                </div>
+                                            </div>
+                                            <a href="https://wa.me/5567998933945?text=Olá!%20Gostaria%20de%20estar%20realizando%20um%20pedido."
+                                                target="_blank" class="button button--yellow">&#x1F49C; PEDIR AGORA</a>
+                                        </article>
+
+                                        
+                                    </div>
+                                    <div class="massas-page" data-page="2">
+                                        <article class="product-card product-card--item">
+                                            <div class="product-title">
+                                                <span>&#X1F368;</span>
+                                                <h3>Balde de massa - 10kg</h3>
+                                            </div>
+                                            <img src="images/image_representacao_pote10kg.png"
+                                                alt="Ilustração massa de sorvete de chocolate para balde de 10kg">
+                                            <div class="product-price product-price--single">
+                                                <div>
+                                                    <strong>R$ 150,00</strong>
+                                                    <small>unidade</small>
+                                                </div>
+                                            </div>
+                                            <a href="https://wa.me/5567998933945?text=Olá!%20Gostaria%20de%20estar%20realizando%20um%20pedido."
+                                                target="_blank" class="button button--blue">&#x1F49C; PEDIR AGORA</a>
+                                        </article>
+                                    </div>
+                                </div>
+
+                                <div class="massas-pagination">
+                                    <button class="massas-dot massas-dot--active" data-page="0"
+                                        aria-label="Página 1"></button>
+                                    <button class="massas-dot" data-page="1" aria-label="Página 2"></button>
+                                    <button class="massas-dot" data-page="2" aria-label="Página 3"></button>
+                                </div>
                             </div>
-                        </div>
 
-                        <a href="https://wa.me/5567998933945?text=Olá!%20Gostaria%20de%20estar%20realizando%20um%20pedido."
-                            target="_blank" class="button button--purple">&#x1F49C; PEDIR AGORA</a>
-                    </article>
+                            <div class="category-slide">
+                                <h3 class="category-slide-title"> Gelos triturados</h3>
 
-                    <article class="product-card product-card--item">
-                        <div class="product-title">
-                            <span>&#x1F42E;</span>
-                            <h3>Picolés de Leite</h3>
-                        </div>
+                                <article class="product-card product-card--item">
+                                    <div class="product-title">
+                                        <span>&#x1F367;</span>
+                                        <h3>Comestível triturado – 3 kg</h3>
+                                    </div>
+                                    <img src="images/image_representacao_geloTriturado.png"
+                                        alt="Imagem ilustrativa gerada por IA">
+                                    <div class="product-price product-price--single">
+                                        <div>
+                                            <strong>R$ 6,00</strong>
+                                            <small>unidade</small>
+                                        </div>
+                                    </div>
+                                    <a href="https://wa.me/5567998933945?text=Olá!%20Gostaria%20de%20estar%20realizando%20um%20pedido."
+                                        target="_blank" class="button button--purple">&#x1F49C; PEDIR AGORA</a>
+                                </article>
 
-                        <img src="images/image_picoleLeite_Ilustracao.png" alt="Imagem ilustrativa gerada por IA">
-
-                        <div class="product-price">
-                            <div>
-                                <strong>R$ 3,00</strong>
-                                <small>unidade</small>
+                                <article class="product-card product-card--item">
+                                    <div class="product-title">
+                                        <span>&#x1F367;</span>
+                                        <h3>Comestível triturado – 5 kg</h3>
+                                    </div>
+                                    <img src="images/image_representacao_geloTriturado.png"
+                                        alt="Imagem ilustrativa gerada por IA">
+                                    <div class="product-price product-price--single">
+                                        <div>
+                                            <strong>R$ 10,00</strong>
+                                            <small>unidade</small>
+                                        </div>
+                                    </div>
+                                    <a href="https://wa.me/5567998933945?text=Olá!%20Gostaria%20de%20estar%20realizando%20um%20pedido."
+                                        target="_blank" class="button button--yellow">&#x1F49C; PEDIR AGORA</a>
+                                </article>
                             </div>
-                            <div>
-                                <strong>R$ 2,00</strong>
-                                <small>acima de 10 unidades</small>
-                            </div>
+
                         </div>
-
-                        <a href="https://wa.me/5567998933945?text=Olá!%20Gostaria%20de%20estar%20realizando%20um%20pedido."
-                            target="_blank" class="button button--yellow">&#x1F49C; PEDIR AGORA</a>
-                    </article>
-
-                    <article class="product-card product-card--crushed">
-                        <div class="product-title">
-                            <span>&#x1F366;</span>
-                            <h3>Especial Moreninha</h3>
-                        </div>
-
-                        <img src="images/moreninha_Ilustracao.png" alt="Imagem ilustrativa gerada por IA">
-
-                        <div class="product-price product-price--single">
-                            <div>
-                                <strong>R$ 8,00</strong>
-                                <small>unidade</small>
-                            </div>
-                        </div>
-
-                        <a href="https://wa.me/5567998933945?text=Olá!%20Gostaria%20de%20estar%20realizando%20um%20pedido."
-                            target="_blank" class="button button--blue">&#x1F49C; PEDIR AGORA</a>
-                    </article>
-                    <article class="product-card product-card--item">
-                        <div class="product-title">
-                            <span>&#X1F368;</span>
-                            <h3>Copo de massas 300ml</h3>
-                        </div>
-
-                        <img src="images/massa_copo_Ilustração.png"
-                            alt="Ilustração massa de sorvete de chocolate para copo de 300ml - Créditos: https://br.pinterest.com/pin/626281891945792829/">
-
-                        <div class="product-price product-price--single">
-                            <div>
-                                <strong>R$ 10,00</strong>
-                                <small>unidade</small>
-                            </div>
-                        </div>
-
-                        <a href="https://wa.me/5567998933945?text=Olá!%20Gostaria%20de%20estar%20realizando%20um%20pedido."
-                            target="_blank" class="button button--purple">&#x1F49C; PEDIR AGORA</a>
-                    </article>
-                    <article class="product-card product-card--item">
-                        <div class="product-title">
-                            <span>&#X1F368;</span>
-                            <h3>Pote de massa - 1.5kg</h3>
-                        </div>
-
-                        <img src="images/image_representacao_pote1.5kg.png"
-                            alt="ilustracao massa de sorvete de morango para balde de 1.5kg - Créditos: https://br.pinterest.com/pin/66287425762492734/">
-
-                        <div class="product-price product-price--single">
-                            <div>
-                                <strong>R$ 22,00</strong>
-                                <small>unidade</small>
-                            </div>
-                        </div>
-
-                        <a href="https://wa.me/5567998933945?text=Olá!%20Gostaria%20de%20estar%20realizando%20um%20pedido."
-                            target="_blank" class="button button--purple">&#x1F49C; PEDIR AGORA</a>
-                    </article>
-                    <article class="product-card product-card--item">
-                        <div class="product-title">
-                            <span>&#X1F368;</span>
-                            <h3>Pode de massa - 5kg</h3>
-                        </div>
-
-                        <img src="images/image_representacao_pote5kg.png"
-                            alt="Ilustração massa de sorvete napolitano para balde de 5kg - Créditos: https://br.pinterest.com/pin/492649955184902/">
-
-                        <div class="product-price product-price--single">
-                            <div>
-                                <strong>R$ 80,00</strong>
-                                <small>unidade</small>
-                            </div>
-                        </div>
-
-                        <a href="https://wa.me/5567998933945?text=Olá!%20Gostaria%20de%20estar%20realizando%20um%20pedido."
-                            target="_blank" class="button button--yellow">&#x1F49C; PEDIR AGORA</a>
-                    </article>
-                    <article class="product-card product-card--item">
-                        <div class="product-title">
-                            <span>&#X1F368;</span>
-                            <h3>Balde de massa - 10kg</h3>
-                        </div>
-
-                        <img src="images/image_representacao_pote10kg.png"
-                            alt="Ilustração massa de sorvete de chocolate para balde de 10kg - Créditos: https://br.pinterest.com/pin/576742296075962653/">
-
-                        <div class="product-price product-price--single">
-                            <div>
-                                <strong>R$ 150,00</strong>
-                                <small>unidade</small>
-                            </div>
-                        </div>
-                        <a href="https://wa.me/5567998933945?text=Olá!%20Gostaria%20de%20estar%20realizando%20um%20pedido."
-                            target="_blank" class="button button--blue">&#x1F49C; PEDIR AGORA</a>
-                    </article>
-                    <article class="product-card product-card--item">
-                        <div class="product-title">
-                            <span>&#x1F367;</span>
-                            <h3>Comestível triturado – 3 kg</h3>
-                        </div>
-
-                        <img src="images/image_representacao_geloTriturado.png" alt="Imagem ilustrativa gerada por IA">
-
-                        <div class="product-price product-price--single">
-                            <div>
-                                <strong>R$ 6,00</strong>
-                                <small>unidade</small>
-                            </div>
-                        </div>
-
-                        <a href="https://wa.me/5567998933945?text=Olá!%20Gostaria%20de%20estar%20realizando%20um%20pedido."
-                            target="_blank" class="button button--purple">&#x1F49C; PEDIR AGORA</a>
-                    </article>
-                    <article class="product-card product-card--item">
-                        <div class="product-title">
-                            <span>&#x1F367;</span>
-                            <h3>Comestível triturado – 5 kg</h3>
-                        </div>
-
-                        <img src="images/image_representacao_geloTriturado.png" alt="Imagem ilustrativa gerada por IA">
-
-                        <div class="product-price product-price--single">
-                            <div>
-                                <strong>R$ 10,00</strong>
-                                <small>unidade</small>
-                            </div>
-                        </div>
-
-                        <a href="https://wa.me/5567998933945?text=Olá!%20Gostaria%20de%20estar%20realizando%20um%20pedido."
-                            target="_blank" class="button button--yellow">&#x1F49C; PEDIR AGORA</a>
-                    </article>
+                    </div>
+                    <button class="carousel-btn carousel-btn--next" aria-label="Próximo slide">
+                        &#10095;
+                    </button>
 
                 </div>
 
@@ -378,7 +406,8 @@
             <div class="footer-column">
                 <h3>Siga a gente</h3>
 
-                <a href="https://www.instagram.com/fruitsalles/" target="_blank"><i class="fa-brands fa-instagram"></i></span> Instagram</a>
+                <a href="https://www.instagram.com/fruitsalles/" target="_blank"><i
+                        class="fa-brands fa-instagram"></i><span> Instagram</span></a>
 
                 <h4>Telefone para contato</h4>
 
@@ -418,13 +447,9 @@
 
             <div class="footer-column company-info">
                 <h3>INFORMAÇÕES DA EMPRESA</h3>
-
-                <p>
                 <div class="logo-text">
                     <strong><span>Fruit</span><b>Salles</b></strong>
                 </div><br>
-                CNPJ: XX.XXX.XXX/XXXX-XX
-                </p>
 
                 <p>
                     Produção e comercialização de alimentos<br>
