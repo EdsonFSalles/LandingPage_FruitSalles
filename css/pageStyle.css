@@ -2142,7 +2142,6 @@ body.swal2-shown>.order-modal {
     .social-menu a {
         width: 38px;
         height: 38px;
-        padding: 0;
         gap: 0px;
         justify-content: center;
         font-size: 0px;
@@ -2150,6 +2149,8 @@ body.swal2-shown>.order-modal {
 
     .social-menu span {
         font-size: 25px;
+        align-items: center;
+        align-self: center;
     }
 
     a.viewCartBtnHeader {
