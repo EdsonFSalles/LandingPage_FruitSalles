@@ -288,14 +288,13 @@ const HTMLGenerator = {
     // Generate cart action buttons
     cartActions: () => `
          <div style="display: flex; gap: 10px; flex-direction: column;">
-        <button id="continueShoppingBtn" class="button btn-continue">${EMOJIS.cart} CONTINUAR COMPRANDO</button>
         <button id="finalizeOrderBtn" class="button btn-finalize">${EMOJIS.whatsapp} FINALIZAR PEDIDO</button>
         <div style="display: flex; gap: 10px; margin-top: 10px;">
             <button id="clearCartBtn" class="button btn-clear" style="flex: 1; background: #e74c3c; color: white; border: none; padding: 12px 20px; border-radius: 12px; font-weight: 600; cursor: pointer;">
                 ${EMOJIS.remove} ESVAZIAR CARRINHO
             </button>
-            <button id="backToShopBtn" class="button btn-back" style="flex: 1; background: #3498db; color: white; border: none; padding: 12px 20px; border-radius: 12px; font-weight: 600; cursor: pointer;">
-                ${EMOJIS.cart} VOLTAR ÀS COMPRAS
+            <button id="continueShoppingBtn" class="button btn-continue" style="flex: 1;  padding: 12px 20px; border-radius: 12px; font-weight: 600; cursor: pointer;">
+                ${EMOJIS.cart}  CONTINUAR COMPRANDO
             </button>
         </div>
     </div>
@@ -1057,7 +1056,6 @@ const EventManager = {
         DOM.getElement('continueShoppingBtn')?.addEventListener('click', DOM.hideModal);
         DOM.getElement('finalizeOrderBtn')?.addEventListener('click', CartManager.finalize);
         DOM.getElement('clearCartBtn')?.addEventListener('click', CartManager.clearCart);
-        DOM.getElement('backToShopBtn')?.addEventListener('click', CartManager.backToShop);
 
         document.querySelectorAll('.cart-edit-btn').forEach(btn =>
             btn.addEventListener('click', () => CartManager.editItem(parseInt(btn.dataset.index)))
