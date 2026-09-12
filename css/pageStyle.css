@@ -2169,6 +2169,18 @@ body.swal2-shown>.order-modal {
         border-right: 0;
     }
 
+    .hero-benefits {
+        margin: 10px 19px;
+        background: transparent;
+        border: none;
+    }
+
+    .benefit {
+        background: rgba(94, 5, 94, 0.23);
+        border: 1px solid rgba(255, 255, 255, .1);
+        border-radius: var(--radius-small);
+    }
+
     .footer {
         padding-top: 50px;
         padding-left: 5px;
@@ -2415,15 +2427,5 @@ body.swal2-shown>.order-modal {
         height: 38px;
     }
 
-    .hero-benefits {
-        margin: 10px 15px;
-        background: transparent;
-        border: none;
-    }
-
-    .benefit {
-        background: rgba(94, 5, 94, 0.23);
-        border: 1px solid rgba(255, 255, 255, .1);
-        border-radius: var(--radius-small);
-    }
+    
 }
